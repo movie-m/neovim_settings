@@ -378,6 +378,16 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+" Start multiple cursor sessions
+" add current character range to cursors
+nmap <silent> <C-c> <Plug>(coc-cursors-position)
+" add current word range to cursors.
+nmap <silent> <C-d> <Plug>(coc-cursors-word)
+" add current visual selected range to cursors.
+xmap <silent> <C-d> <Plug>(coc-cursors-range)
+" use normal command like `<leader>xi(`
+nmap <leader>x  <Plug>(coc-cursors-operator)
+
 " " -- vim-cpp-modern for c/c++ syntax highlighting -- "
 " " Disable function highlighting (affects both C and C++ files)
 " let g:cpp_function_highlight = 1
