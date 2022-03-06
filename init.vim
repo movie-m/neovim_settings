@@ -191,6 +191,12 @@ filetype plugin indent on
 " -- syntax highlighting -- "
 syntax on
 
+" Make vim treat all json files as jsonc to allow comments
+" ref: https://www.codegrepper.com/code-examples/html/coc+allow+comments+in+json
+augroup JsonToJsonc
+    autocmd! FileType json set filetype=jsonc
+augroup END
+
 " -- tab, space, etc. --"
 " tabstop:          width of tab character
 " softtabstop:      fine tunes the amount of white space to be added
@@ -294,6 +300,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
+nnoremap <A-f> :CocSearch 
 
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
@@ -447,12 +454,6 @@ let g:rainbow_conf = {
 " let g:python_highlight_all = 1
 " let g:python_highlight_space_errors	= 0
 
-" Make vim treat all json files as jsonc to allow comments
-
-" ref: https://www.codegrepper.com/code-examples/html/coc+allow+comments+in+json
-augroup JsonToJsonc
-    autocmd! FileType json set filetype=jsonc
-augroup END
 
 " -- fold by syntax --"
 " zo to open a fold "
