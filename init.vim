@@ -3,6 +3,7 @@ au bufenter * set fo-=c fo-=r fo-=o
 
 " -- limit the text width -- "
 autocmd VimEnter * set textwidth=100 formatoptions+=t
+set cinkeys-=:
 
 " -- set a line width marker -- "
 " set colorcolumn=100
@@ -18,6 +19,12 @@ set ruler
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+" command line fuzzy finder
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Allow raw rg commands
+Plug 'jesseleite/vim-agriculture'
+
 " make sure you use single quotes
 Plug 'junegunn/vim-easy-align'
 
@@ -53,6 +60,7 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 
 " file system explorer and search
 Plug 'preservim/nerdtree'
+" Plug 'ryanoasis/vim-devicons'
 " Plug 'ctrlpvim/ctrlp.vim'
 
 " asyncronously compiling plugin
@@ -89,6 +97,43 @@ Plug 'easymotion/vim-easymotion'
 
 " initialize plugin system
 call plug#end()
+
+" -- spell check -- "
+" set spell spelllang=en_us
+
+" -- disable spell checking in terminal buffers -- "
+au TermOpen * setlocal nospell
+
+" -- color theme -- "
+" avoid suppressing spelling check
+augroup my_colours
+  autocmd!
+  autocmd colorscheme gruvbox hi spellbad cterm=reverse
+augroup end
+
+set background=dark
+colorscheme gruvbox
+
+" -- show line number -- "
+set number
+
+" -- key binding -- "
+" set leader key
+let mapleader = ","
+
+" leader+w to save
+inoremap <leader>w <esc>:w<cr>
+noremap <leader>w :w<cr>
+
+" mapping delay
+set timeoutlen=500
+set ttimeoutlen=50
+
+" -- detect the file type, load file type specific plugins, and indent --"
+filetype plugin indent on
+
+" -- syntax highlighting -- "
+syntax on
 
 " -- vim easy align -- "
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -152,49 +197,10 @@ let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
 set updatetime=100
 
 
-" -- spell check -- "
-" set spell spelllang=en_us
-
-" -- disable spell checking in terminal buffers -- "
-au TermOpen * setlocal nospell
-
-" -- color theme -- "
-" avoid suppressing spelling check
-augroup my_colours
-  autocmd!
-  autocmd colorscheme gruvbox hi spellbad cterm=reverse
-augroup end
-
-set background=dark
-colorscheme gruvbox
-
-
-
-" -- show line number -- "
-set number
-
-" -- key binding -- "
-" set leader key
-let mapleader = ","
-
-" leader+w to save
-inoremap <leader>w <esc>:w<cr>
-noremap <leader>w :w<cr>
-
-" mapping delay
-set timeoutlen=500
-set ttimeoutlen=50
-
-" -- detect the file type, load file type specific plugins, and indent --"
-filetype plugin indent on
-
-" -- syntax highlighting -- "
-syntax on
-
 " Make vim treat all json files as jsonc to allow comments
 " ref: https://www.codegrepper.com/code-examples/html/coc+allow+comments+in+json
 augroup JsonToJsonc
-    autocmd! FileType json set filetype=jsonc
+    autocmd! FileType json set filetype=jsonc autoread
 augroup END
 
 " -- tab, space, etc. --"
@@ -215,9 +221,19 @@ set hidden
 
 
 " -- setting from coc.vim github  --"
+" Note you can add extension names to the g:coc_global_extensions variable, 
+" and coc will install the missing extensions after coc.nvim service started. 
+let g:coc_global_extensions = ['coc-json',
+            \'coc-git', 
+            \'coc-clangd',
+            \'coc-marketplace',
+            \'coc-sh',
+            \'coc-dash-complete',
+            \'coc-jedi',
+            \'coc-cmake']
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
-set encoding=utf-8
+set encoding=UTF-8
 
 " Some servers have issues with backup files, see #649.
 set nobackup
@@ -454,6 +470,11 @@ let g:rainbow_conf = {
 " let g:python_highlight_all = 1
 " let g:python_highlight_space_errors	= 0
 
+" -- vim agriculture -- "
+nmap <Leader>/ <Plug>RgRawSearch
+vmap <Leader>/ <Plug>RgRawVisualSelection
+nmap <Leader>* <Plug>RgRawWordUnderCursor
+let g:agriculture#disable_smart_quoting = 1
 
 " -- fold by syntax --"
 " zo to open a fold "
