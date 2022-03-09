@@ -474,7 +474,10 @@ let g:rainbow_conf = {
 nmap <Leader>/ <Plug>RgRawSearch
 vmap <Leader>/ <Plug>RgRawVisualSelection
 nmap <Leader>* <Plug>RgRawWordUnderCursor
-let g:agriculture#disable_smart_quoting = 1
+let g:agriculture#disable_smart_quoting = 0
+
+" -- asynctasks -- "
+let g:asyncrun_rootmarks = ['.root']
 
 " -- fold by syntax --"
 " zo to open a fold "
