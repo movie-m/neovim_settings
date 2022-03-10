@@ -495,6 +495,9 @@ noremap <A-k> :resize -1<CR>
 noremap <A-h> :vertical resize -1<CR>
 noremap <A-l> :vertical resize +1<CR>
 
+" view the expaned full path where the current line resides
+nnoremap <C-p> :echo expand('%:p')<CR>   
+
 " Open files by default to the right split
 set splitright
 
