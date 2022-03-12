@@ -84,7 +84,7 @@ Plug 'tpope/vim-commentary'
 " cpp syntax highlighting
 " Plug 'bfrg/vim-cpp-modern'
 " 
-Plug 'jackguo380/vim-lsp-cxx-highlight'
+" Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " tell vim to load the theme/plugin
 Plug 'morhetz/gruvbox'
@@ -428,7 +428,7 @@ nmap <leader>x  <Plug>(coc-cursors-operator)
 " -- lsp_cxx_hl -- "
 " let g:lsp_cxx_hl_use_text_props = 1
 let g:coc_default_semantic_highlight_groups = 1
-let g:lsp_cxx_hl_use_nvim_text_props = 1
+" let g:lsp_cxx_hl_use_nvim_text_props = 1
 " https://github.com/jackguo380/vim-lsp-cxx-highlight/issues/58
 " to avoid broken cursorline
 " hi link LspCxxHlSymParameter LspCxxHlSymField
