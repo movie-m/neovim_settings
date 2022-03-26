@@ -5,7 +5,10 @@
     "clangd.arguments": ["--background-index=true", "--header-insertion=never"],
     "semanticTokens.filetypes":["*"],
 
-    "jedi.enable": true,
+    "python.analysis.diagnosticSeverityOverrides": {"reportInvalidStringEscapeSequence":"none"}
+
+    /*
+    "jedi.enable": false,
     "jedi.startupMessage": false,
     "jedi.markupKindPreferred": "plaintext",
     "jedi.trace.server": "off",
@@ -36,6 +39,7 @@
     "__pycache__",
     "venv"
     ]
+    */
     
     /*
    "languageserver": {

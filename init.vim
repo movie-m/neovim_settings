@@ -436,11 +436,11 @@ nmap <leader>x  <Plug>(coc-cursors-operator)
 
 " -- Easy Motion -- "
 " <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+map  f <Plug>(easymotion-bd-f)
+nmap f <Plug>(easymotion-overwin-f)
 
 " f{char}{char} to move to {char}{char}
-nmap f <Plug>(easymotion-overwin-f2)
+nmap <Leader>f <Plug>(easymotion-overwin-f2)
 
 " Move to line
 map <Leader>l <Plug>(easymotion-bd-jk)
@@ -467,8 +467,12 @@ let g:rainbow_conf = {
 
 
 " --  python syntax highlighting -- "
-" let g:python_highlight_all = 1
-" let g:python_highlight_space_errors	= 0
+let g:python_highlight_all = 1
+let g:python_highlight_space_errors	= 0
+
+" -- coc-pyright -- "
+" ref: https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders#resolve-workspace-folder
+autocmd FileType python let b:coc_root_patterns = ['.root']
 
 " -- vim agriculture -- "
 nmap <Leader>/ <Plug>RgRawSearch
@@ -506,6 +510,29 @@ highlight Comment cterm=italic
 
 " -- determine the number of context lines above and below the cursor --"
 " -- set it to a large value to cause the cursor to stay in the middle line when possible --"
-set so=999
+" set so=10000 this will spoil the following settings!
+" We can work around it by using autocommand in normal and insert mode
 set cursorline
+
+" ref: https://stackoverflow.com/questions/50026385/is-it-possible-to-automatically-make-vim-vertically-center-the-line-when-typing
+" keep cursorline centered in insert mode automatically 
+" when its resides within last 1/3 of buffer on typing any character or entering insert mode in this region
+augroup autoCenter
+  autocmd!
+  autocmd InsertCharPre,InsertEnter * if (winline() * 3 >= (winheight(0) * 2))
+                                            \| norm! zz
+                                        \| endif
+augroup END
+
+" ref: https://vi.stackexchange.com/questions/26039/how-to-keep-cursor-vertically-aligned-to-center-even-at-the-end-of-buffer
+" Remapping few keystrokes that can cause the cursor to change lines 
+" inoremap <CR> <C-\><C-O><C-E><CR>
+" inoremap <BS> <BS><C-O>zz
+" nnoremap o <C-E>o
+" -- keep cursorline centered in normal mode -- "
+augroup KeepCentered
+  autocmd!
+  autocmd CursorMoved * normal! zz
+augroup END
+
 syntax on
