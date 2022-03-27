@@ -517,12 +517,12 @@ set cursorline
 " ref: https://stackoverflow.com/questions/50026385/is-it-possible-to-automatically-make-vim-vertically-center-the-line-when-typing
 " keep cursorline centered in insert mode automatically 
 " when its resides within last 1/3 of buffer on typing any character or entering insert mode in this region
-augroup autoCenter
-  autocmd!
-  autocmd InsertCharPre,InsertEnter * if (winline() * 3 >= (winheight(0) * 2))
-                                            \| norm! zz
-                                        \| endif
-augroup END
+" augroup autoCenter
+"   autocmd!
+"   autocmd InsertCharPre,InsertEnter * if (winline() * 3 >= (winheight(0) * 2))
+"                                             \| norm! zz
+"                                         \| endif
+" augroup END
 
 " ref: https://vi.stackexchange.com/questions/26039/how-to-keep-cursor-vertically-aligned-to-center-even-at-the-end-of-buffer
 " Remapping few keystrokes that can cause the cursor to change lines 
