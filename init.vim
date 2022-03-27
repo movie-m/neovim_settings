@@ -8,6 +8,8 @@ set cinkeys-=:
 " -- set a line width marker -- "
 " set colorcolumn=100
 
+set shell=zsh
+
 " -- display row and column number on the status bar -- "
 set ruler
 
@@ -167,8 +169,6 @@ let g:easy_align_delimiters = {
 \ }
 
 
-" let g:asyncrun_open = 6
-let g:asyncrun_open = 6
 
 " -- settings for blamer.nvim -- "
 let g:blamer_enabled = 0
@@ -436,11 +436,11 @@ let g:lsp_cxx_hl_use_nvim_text_props = 1
 
 " -- Easy Motion -- "
 " <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+map  f <Plug>(easymotion-bd-f)
+nmap f <Plug>(easymotion-overwin-f)
 
 " f{char}{char} to move to {char}{char}
-nmap f <Plug>(easymotion-overwin-f2)
+nmap <Leader>f <Plug>(easymotion-overwin-f2)
 
 " Move to line
 map <Leader>l <Plug>(easymotion-bd-jk)
@@ -473,11 +473,15 @@ let g:rainbow_conf = {
 " -- vim agriculture -- "
 nmap <Leader>/ <Plug>RgRawSearch
 vmap <Leader>/ <Plug>RgRawVisualSelection
-nmap <Leader>* <Plug>RgRawWordUnderCursor
+" nmap <Leader>* <Plug>RgRawWordUnderCursor
+nmap <Leader>c <Plug>RgRawWordUnderCursor <cr>
 let g:agriculture#disable_smart_quoting = 0
 
 " -- asynctasks -- "
-let g:asyncrun_rootmarks = ['.root']
+" let g:asyncrun_rootmarks = ['.root']
+let g:asyncrun_open = 6
+" bind the F7 to the uos-build in ~/.config/nvim/tasks.ini
+" noremap <silent><f7> :AsyncTask uos-build<cr>
 
 " -- fold by syntax --"
 " zo to open a fold "
@@ -489,11 +493,15 @@ set nofoldenable
 " prevent closing all folded regions when first time zc
 set foldlevel=99
 
-" resize window Alt+(h|j|k|l)
-noremap <A-j> :resize +1<CR>
-noremap <A-k> :resize -1<CR>
-noremap <A-h> :vertical resize -1<CR>
-noremap <A-l> :vertical resize +1<CR>
+" resize window ALT+(h|j|k|l)
+:nnoremap <silent> <c-Up> :resize -1<CR>
+:nnoremap <silent> <c-Down> :resize +1<CR>
+:nnoremap <silent> <c-left> :vertical resize -1<CR>
+:nnoremap <silent> <c-right> :vertical resize +1<CR>
+" noremap <M-j> :resize +1<CR>
+" noremap <M-k> :resize -1<CR>
+" noremap <M-h> :vertical resize -1<CR>
+" noremap <M-l> :vertical resize +1<CR>
 
 " view the expaned full path where the current line resides
 nnoremap <C-p> :echo expand('%:p')<CR>   
@@ -509,5 +517,29 @@ highlight Comment cterm=italic
 
 " -- determine the number of context lines above and below the cursor --"
 " -- set it to a large value to cause the cursor to stay in the middle line when possible --"
-set so=999
+" set so=10000 this will spoil the following settings!
+" We can work around it by using autocommand in normal and insert mode
 set cursorline
+
+" ref: https://stackoverflow.com/questions/50026385/is-it-possible-to-automatically-make-vim-vertically-center-the-line-when-typing
+" keep cursorline centered in insert mode automatically 
+" when its resides within last 1/3 of buffer on typing any character or entering insert mode in this region
+" augroup autoCenter
+"   autocmd!
+"   autocmd InsertCharPre,InsertEnter * if (winline() * 3 >= (winheight(0) * 2))
+"                                             \| norm! zz
+"                                         \| endif
+" augroup END
+
+" ref: https://vi.stackexchange.com/questions/26039/how-to-keep-cursor-vertically-aligned-to-center-even-at-the-end-of-buffer
+" Remapping few keystrokes that can cause the cursor to change lines 
+" inoremap <CR> <C-\><C-O><C-E><CR>
+" inoremap <BS> <BS><C-O>zz
+" nnoremap o <C-E>o
+" -- keep cursorline centered in normal mode -- "
+augroup KeepCentered
+  autocmd!
+  autocmd CursorMoved * normal! zz
+augroup END
+
+syntax on
