@@ -5,8 +5,8 @@
     "clangd.arguments": ["--background-index=true", "--header-insertion=never"],
     "semanticTokens.filetypes":["*"],
     
-    "python.analysis.diagnosticSeverityOverrides": {"reportInvalidStringEscapeSequence":"none"},
-    "python.analysis.diagnosticSeverityOverrides": {"reportOptionalMemberAccess":"none"}
+    "python.analysis.diagnosticSeverityOverrides": {"reportOptionalMemberAccess":"none",
+        "reportInvalidStringEscapeSequence":"none"}
 
     /*
     "jedi.enable": false,
