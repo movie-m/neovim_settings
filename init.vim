@@ -509,5 +509,29 @@ highlight Comment cterm=italic
 
 " -- determine the number of context lines above and below the cursor --"
 " -- set it to a large value to cause the cursor to stay in the middle line when possible --"
-set so=999
+" set so=10000 this will spoil the following settings!
+" We can work around it by using autocommand in normal and insert mode
+set cursorline
+
+" ref: https://stackoverflow.com/questions/50026385/is-it-possible-to-automatically-make-vim-vertically-center-the-line-when-typing
+" keep cursorline centered in insert mode automatically 
+" when its resides within last 1/3 of buffer on typing any character or entering insert mode in this region
+" augroup autoCenter
+"   autocmd!
+"   autocmd InsertCharPre,InsertEnter * if (winline() * 3 >= (winheight(0) * 2))
+"                                             \| norm! zz
+"                                         \| endif
+" augroup END
+" The above commands suppress the auto-completeion of coc-vim.
+
+" ref: https://vi.stackexchange.com/questions/26039/how-to-keep-cursor-vertically-aligned-to-center-even-at-the-end-of-buffer
+" Remapping few keystrokes that can cause the cursor to change lines 
+" inoremap <CR> <C-\><C-O><C-E><CR>
+" inoremap <BS> <BS><C-O>zz
+" nnoremap o <C-E>o
+" -- keep cursorline centered in normal mode -- "
+augroup KeepCentered
+  autocmd!
+  autocmd CursorMoved * normal! zz
+augroup END
 set cursorline
