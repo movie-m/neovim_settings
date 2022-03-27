@@ -530,6 +530,7 @@ set cursorline
 "                                             \| norm! zz
 "                                         \| endif
 " augroup END
+" The above commands suppress the auto-completeion of coc-vim.
 
 " ref: https://vi.stackexchange.com/questions/26039/how-to-keep-cursor-vertically-aligned-to-center-even-at-the-end-of-buffer
 " Remapping few keystrokes that can cause the cursor to change lines 
@@ -541,5 +542,3 @@ augroup KeepCentered
   autocmd!
   autocmd CursorMoved * normal! zz
 augroup END
-
-syntax on
