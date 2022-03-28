@@ -258,6 +258,9 @@ else
   set signcolumn=yes
 endif
 
+" shortcut to switch between header and source using clangd
+nmap <silent> <C-h> :call CocAction('runCommand', 'clangd.switchSourceHeader')<CR>
+
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -467,8 +470,8 @@ let g:rainbow_conf = {
 
 
 " --  python syntax highlighting -- "
-" let g:python_highlight_all = 1
-" let g:python_highlight_space_errors	= 0
+let g:python_highlight_all = 1
+let g:python_highlight_space_errors	= 0
 
 " -- vim agriculture -- "
 nmap <Leader>/ <Plug>RgRawSearch
