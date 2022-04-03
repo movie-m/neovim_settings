@@ -493,11 +493,18 @@ set nofoldenable
 " prevent closing all folded regions when first time zc
 set foldlevel=99
 
+" Not working on macos
 " resize window Alt+(h|j|k|l)
-noremap <A-j> :resize +1<CR>
-noremap <A-k> :resize -1<CR>
-noremap <A-h> :vertical resize -1<CR>
-noremap <A-l> :vertical resize +1<CR>
+" noremap <A-j> :resize +1<CR>
+" noremap <A-k> :resize -1<CR>
+" noremap <A-h> :vertical resize -1<CR>
+" noremap <A-l> :vertical resize +1<CR>
+" ctrl + arrow keys to reize the split windows 
+" Turn off the same shortcut in MacOS Preferences -> Keyboard -> Mission Control
+" nnoremap <silent> <C-Up> :resize -1<CR>
+" nnoremap <silent> <C-Down> :resize +1<CR>
+" nnoremap <silent> <C-Left> :vertical resize -1<CR>
+" nnoremap <silent> <C-Right> :vertical resize +1<CR>
 
 " Open files by default to the right split
 set splitright
