@@ -414,6 +414,10 @@ xmap <silent> <C-d> <Plug>(coc-cursors-range)
 " use normal command like `<leader>xi(`
 nmap <leader>x  <Plug>(coc-cursors-operator)
 
+" root pattern for python project, especially for coc-pright to work properly
+" https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders#resolve-workspace-folder
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.root']
+
 " " -- vim-cpp-modern for c/c++ syntax highlighting -- "
 " " Disable function highlighting (affects both C and C++ files)
 " let g:cpp_function_highlight = 1

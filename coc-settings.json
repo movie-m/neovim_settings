@@ -1,10 +1,15 @@
 {
     "diagnostic.showUnused": false,
+    "diagnostic.level": "hint",
     "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin/clangd",
     "clangd.enabled": true,
     "clangd.arguments": ["--background-index=true", "--header-insertion=never", "-clang-tidy=false", "-clang-tidy-checks=*"],
 
-    "jedi.enable": true,
+    "python.analysis.diagnosticSeverityOverrides": {"reportGeneralTypeIssues": "none",
+            "reportOptionalMemberAccess": "none", "reportInvalidStringEscapeSequence": "none"}
+
+    /*
+    "jedi.enable": false,
     "jedi.startupMessage": false,
     "jedi.markupKindPreferred": "plaintext",
     "jedi.trace.server": "off",
@@ -35,7 +40,8 @@
     "__pycache__",
     "venv"
     ]
-    
+    */ 
+
    /* "languageserver": {
         "ccls": {
         "command": "ccls",
