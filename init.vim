@@ -319,7 +319,10 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
-nnoremap <A-f> :CocSearch 
+" let wordUnderCursor=expand("<cword>")
+" nnoremap <A-f> :CocSearch 
+nnoremap <silent> <Leader>cf :exe 'CocSearch '.expand('<cword>')<CR>
+nmap <silent> <C-a> :call CocAction('runCommand', 'document.searchCurrentWord')<CR>
 
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
