@@ -411,9 +411,9 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " add current character range to cursors
 nmap <silent> <C-c> <Plug>(coc-cursors-position)
 " add current word range to cursors.
-nmap <silent> <C-d> <Plug>(coc-cursors-word)
+" nmap <silent> <C-d> <Plug>(coc-cursors-word)
 " add current visual selected range to cursors.
-xmap <silent> <C-d> <Plug>(coc-cursors-range)
+" xmap <silent> <C-d> <Plug>(coc-cursors-range)
 " use normal command like `<leader>xi(`
 nmap <leader>x  <Plug>(coc-cursors-operator)
 

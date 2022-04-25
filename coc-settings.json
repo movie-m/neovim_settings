@@ -5,10 +5,13 @@
     "clangd.enabled": true,
     "clangd.arguments": ["--background-index=true", "--header-insertion=never", "-clang-tidy=false", "-clang-tidy-checks=*"],
 
+    /*
     "python.analysis.diagnosticSeverityOverrides": {"reportGeneralTypeIssues": "none",
             "reportOptionalMemberAccess": "none", "reportInvalidStringEscapeSequence": "none"}
+    */
+    "python.analysis.diagnosticSeverityOverrides": {"reportOptionalMemberAccess": "none",
+            "reportInvalidStringEscapeSequence": "none"},
 
-    /*
     "jedi.enable": false,
     "jedi.startupMessage": false,
     "jedi.markupKindPreferred": "plaintext",
@@ -40,7 +43,6 @@
     "__pycache__",
     "venv"
     ]
-    */ 
 
    /* "languageserver": {
         "ccls": {
