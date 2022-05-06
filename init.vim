@@ -6,7 +6,10 @@ autocmd VimEnter * set textwidth=100 formatoptions+=t
 set cinkeys-=:
 
 " -- set a line width marker -- "
-" set colorcolumn=100
+set colorcolumn=100
+
+" -- remove color column in quickfix window --"
+au FileType qf setlocal colorcolumn=
 
 set shell=zsh
 
@@ -409,13 +412,15 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " Start multiple cursor sessions
 " add current character range to cursors
-nmap <silent> <C-c> <Plug>(coc-cursors-position)
+" nmap <silent> <C-c> <Plug>(coc-cursors-position)
 " add current word range to cursors.
 " nmap <silent> <C-d> <Plug>(coc-cursors-word)
 " add current visual selected range to cursors.
 " xmap <silent> <C-d> <Plug>(coc-cursors-range)
 " use normal command like `<leader>xi(`
-nmap <leader>x  <Plug>(coc-cursors-operator)
+" nmap <leader>x  <Plug>(coc-cursors-operator)
+nmap <silent> <C-d> <Plug>(coc-cursors-word)*
+xmap <silent> <C-d> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
 
 " root pattern for python project, especially for coc-pright to work properly
 " https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders#resolve-workspace-folder
