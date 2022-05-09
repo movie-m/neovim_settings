@@ -5,9 +5,14 @@
     "clangd.enabled": true,
     "clangd.arguments": ["--background-index=true", "--header-insertion=never"],
     "semanticTokens.filetypes":["*"],
+
+    /* hide the function docstring or signature
+    "signature.hideOnTextChange": true,
+    "signature.enable": false,
+    */
     
     "python.analysis.diagnosticSeverityOverrides": {"reportOptionalMemberAccess":"none",
-        "reportInvalidStringEscapeSequence":"none"},
+        "reportInvalidStringEscapeSequence":"none", "reportGeneralTypeIssues": "none"},
 
     "jedi.enable": false,
     "jedi.startupMessage": false,
