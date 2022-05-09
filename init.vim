@@ -6,8 +6,12 @@ autocmd VimEnter * set textwidth=100 formatoptions+=t
 set cinkeys-=:
 
 " -- set a line width marker -- "
-" set colorcolumn=100
+set colorcolumn=100
 
+" -- remove color column in quickfix window --"
+au FileType qf setlocal colorcolumn=
+
+set shell=zsh
 " -- display row and column number on the status bar -- "
 set ruler
 
