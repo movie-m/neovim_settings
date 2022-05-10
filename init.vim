@@ -23,6 +23,9 @@ set ruler
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+" Highlighting trailling whitespaces
+Plug 'ntpeters/vim-better-whitespace'
+
 " command line fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
