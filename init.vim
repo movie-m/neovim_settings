@@ -24,6 +24,10 @@ set ruler
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+
+" Highlighting trailling whitespaces
+Plug 'ntpeters/vim-better-whitespace'
+
 " command line fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -71,10 +75,10 @@ Plug 'preservim/nerdtree'
 " asyncronously compiling plugin
 Plug 'skywind3000/asyncrun.vim'
 
-" Using vim's internal terminal 
+" Using vim's internal terminal
 Plug 'skywind3000/vim-terminal-help'
 
-" Building, Testing, and Deploying Tasks 
+" Building, Testing, and Deploying Tasks
 Plug 'skywind3000/asynctasks.vim'
 
 " Use release branch (recommend)
@@ -83,12 +87,12 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " show a git diff
 Plug 'mhinz/vim-signify'
 
-" commenting plugin 
+" commenting plugin
 Plug 'tpope/vim-commentary'
 
 " cpp syntax highlighting
 " Plug 'bfrg/vim-cpp-modern'
-" 
+
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " tell vim to load the theme/plugin
@@ -104,7 +108,7 @@ Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 " -- spell check -- "
-" set spell spelllang=en_us
+set spell spelllang=en_us
 
 " -- disable spell checking in terminal buffers -- "
 au TermOpen * setlocal nospell
@@ -214,7 +218,7 @@ augroup END
 " show existing tab with 4 spaces width
 set tabstop=4
 " when indenting with '>>', use 4 spaces width
-" when in visual mode, `5>` indent the current line 5 times 
+" when in visual mode, `5>` indent the current line 5 times
 set shiftwidth=4
 " on pressing tab, insert 4 spaces
 set expandtab
@@ -224,10 +228,10 @@ set hidden
 
 
 " -- setting from coc.vim github  --"
-" Note you can add extension names to the g:coc_global_extensions variable, 
-" and coc will install the missing extensions after coc.nvim service started. 
+" Note you can add extension names to the g:coc_global_extensions variable,
+" and coc will install the missing extensions after coc.nvim service started.
 let g:coc_global_extensions = ['coc-json',
-            \'coc-git', 
+            \'coc-git',
             \'coc-clangd',
             \'coc-marketplace',
             \'coc-sh',
@@ -323,7 +327,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 " let wordUnderCursor=expand("<cword>")
-" nnoremap <A-f> :CocSearch 
+" nnoremap <A-f> :CocSearch
 nnoremap <silent> <Leader>cf :exe 'CocSearch '.expand('<cword>')<CR>
 nmap <silent> <C-a> :call CocAction('runCommand', 'document.searchCurrentWord')<CR>
 
@@ -438,7 +442,7 @@ autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.root']
 
 " " Put all standard C and C++ keywords under Vim's highlight group 'Statement'
 " " (affects both C and C++ files)
-" let g:cpp_simple_highlight = 
+" let g:cpp_simple_highlight =
 
 " -- lsp_cxx_hl -- "
 " let g:lsp_cxx_hl_use_text_props = 1
@@ -504,7 +508,7 @@ let g:asyncrun_open = 6
 " za to toggle "
 set foldmethod=syntax
 " prevent folding when launched
-set nofoldenable  
+set nofoldenable
 " prevent closing all folded regions when first time zc
 set foldlevel=99
 
@@ -519,7 +523,7 @@ set foldlevel=99
 " noremap <M-l> :vertical resize +1<CR>
 
 " view the expaned full path where the current line resides
-nnoremap <C-p> :echo expand('%:p')<CR>   
+nnoremap <C-p> :echo expand('%:p')<CR>
 
 " Open files by default to the right split
 set splitright
@@ -537,7 +541,7 @@ highlight Comment cterm=italic
 set cursorline
 
 " ref: https://stackoverflow.com/questions/50026385/is-it-possible-to-automatically-make-vim-vertically-center-the-line-when-typing
-" keep cursorline centered in insert mode automatically 
+" keep cursorline centered in insert mode automatically
 " when its resides within last 1/3 of buffer on typing any character or entering insert mode in this region
 " augroup autoCenter
 "   autocmd!
@@ -548,7 +552,7 @@ set cursorline
 " The above commands suppress the auto-completeion of coc-vim.
 
 " ref: https://vi.stackexchange.com/questions/26039/how-to-keep-cursor-vertically-aligned-to-center-even-at-the-end-of-buffer
-" Remapping few keystrokes that can cause the cursor to change lines 
+" Remapping few keystrokes that can cause the cursor to change lines
 " inoremap <CR> <C-\><C-O><C-E><CR>
 " inoremap <BS> <BS><C-O>zz
 " nnoremap o <C-E>o
