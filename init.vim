@@ -23,6 +23,12 @@ set ruler
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+" nvim v0.5.0
+Plug 'kdheepak/lazygit.nvim'
+
+" neovim terminal in the floating/popup window
+Plug 'voldikss/vim-floaterm'
+
 " Highlighting trailling whitespaces
 Plug 'ntpeters/vim-better-whitespace'
 
@@ -106,7 +112,7 @@ Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 " -- spell check -- "
-" set spell spelllang=en_us
+set spell spelllang=en_us
 
 " -- disable spell checking in terminal buffers -- "
 au TermOpen * setlocal nospell
@@ -555,3 +561,4 @@ augroup KeepCentered
 augroup END
 
 syntax on
+tnoremap <Esc> <C-\><C-n>
