@@ -96,7 +96,8 @@ Plug 'skywind3000/vim-terminal-help'
 Plug 'skywind3000/asynctasks.vim'
 
 " Use release branch (recommend)
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'commit': 'ce448a6'}
 
 " show a git diff
 Plug 'mhinz/vim-signify'
@@ -255,6 +256,7 @@ let g:coc_global_extensions = ['coc-json',
             \'coc-dash-complete',
             \'coc-jedi',
             \'coc-cmake']
+" \'coc-dash-complete',
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
 set encoding=UTF-8
