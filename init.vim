@@ -1,3 +1,15 @@
+" Show cursor line in only one of the split windows
+" https://stackoverflow.com/questions/14068751/how-to-hide-cursor-line-when-focus-in-on-other-window-in-vim
+" augroup CursorLine
+"     au!
+"     au VimEnter * setlocal cursorline
+"     au WinEnter * setlocal cursorline
+"     au BufWinEnter * setlocal cursorline
+"     au WinLeave * setlocal nocursorline
+" augroup END
+
+set cursorline
+
 " -- disable auto-comment in line continuation -- "
 au bufenter * set fo-=c fo-=r fo-=o
 
@@ -7,6 +19,7 @@ set cinkeys-=:
 
 " -- set a line width marker -- "
 set colorcolumn=100
+
 
 " -- remove color column in quickfix window --"
 au FileType qf setlocal colorcolumn=
@@ -24,6 +37,7 @@ set ruler
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+Plug 'inkarkat/vim-CursorLineCurrentWindow'
 
 " Highlighting trailling whitespaces
 Plug 'ntpeters/vim-better-whitespace'
@@ -106,6 +120,9 @@ Plug 'easymotion/vim-easymotion'
 
 " initialize plugin system
 call plug#end()
+
+" You can keep the highlighting for a particular window by setting a window-local variable
+let w:persistent_cursorline = 1
 
 " -- spell check -- "
 set spell spelllang=en_us
@@ -266,7 +283,7 @@ else
 endif
 
 " shortcut to switch between header and source using clangd
-nmap <silent> <C-h> :call CocAction('runCommand', 'clangd.switchSourceHeader')<CR>
+nmap <silent> <C-h> :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -303,7 +320,7 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gh <Plug>(coc-declaration)
 " show definition in a new split
-" nmap <silent> gd :call CocAction('jumpDefinition', 'vsplit')<CR>
+" nmap <silent> gd :call CocActionAsync('jumpDefinition', 'vsplit')<CR>
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -329,7 +346,7 @@ nmap <leader>rn <Plug>(coc-rename)
 " let wordUnderCursor=expand("<cword>")
 " nnoremap <A-f> :CocSearch
 nnoremap <silent> <Leader>cf :exe 'CocSearch '.expand('<cword>')<CR>
-nmap <silent> <C-a> :call CocAction('runCommand', 'document.searchCurrentWord')<CR>
+nmap <silent> <C-a> :call CocActionAsync('runCommand', 'document.searchCurrentWord')<CR>
 
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
@@ -338,7 +355,7 @@ nmap <leader>f  <Plug>(coc-format-selected)
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd FileType typescript,json setl formatexpr=CocActionAsync('formatSelected')
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
@@ -383,10 +400,10 @@ nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 Format :call CocActionAsync('format')
 
 " Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=? Fold :call     CocActionAsync('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
@@ -447,7 +464,7 @@ autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.root']
 " -- lsp_cxx_hl -- "
 " let g:lsp_cxx_hl_use_text_props = 1
 let g:coc_default_semantic_highlight_groups = 1
-let g:lsp_cxx_hl_use_nvim_text_props = 1
+" let g:lsp_cxx_hl_use_nvim_text_props = 1
 " https://github.com/jackguo380/vim-lsp-cxx-highlight/issues/58
 " to avoid broken cursorline
 " hi link LspCxxHlSymParameter LspCxxHlSymField
@@ -538,7 +555,7 @@ highlight Comment cterm=italic
 " -- set it to a large value to cause the cursor to stay in the middle line when possible --"
 " set so=10000 this will spoil the following settings!
 " We can work around it by using autocommand in normal and insert mode
-set cursorline
+" set cursorline
 
 " ref: https://stackoverflow.com/questions/50026385/is-it-possible-to-automatically-make-vim-vertically-center-the-line-when-typing
 " keep cursorline centered in insert mode automatically
@@ -556,8 +573,11 @@ set cursorline
 " inoremap <CR> <C-\><C-O><C-E><CR>
 " inoremap <BS> <BS><C-O>zz
 " nnoremap o <C-E>o
+
 " -- keep cursorline centered in normal mode -- "
 augroup KeepCentered
   autocmd!
   autocmd CursorMoved * normal! zz
 augroup END
+
+" set cursorline
