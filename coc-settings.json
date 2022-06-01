@@ -3,14 +3,15 @@
     "clangd.path":
     "~/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin/clangd",
     "clangd.enabled": true,
-    "clangd.arguments": ["--background-index=true", "--header-insertion=never"],
+    "clangd.arguments": ["--background-index=true", "--header-insertion=never", "-clang-tidy=false",
+            "-clang-tidy-checks=*"],
     "semanticTokens.filetypes":["*"],
 
     /* hide the function docstring or signature
     "signature.hideOnTextChange": true,
     "signature.enable": false,
     */
-    
+
     "python.analysis.diagnosticSeverityOverrides": {"reportOptionalMemberAccess":"none",
         "reportInvalidStringEscapeSequence":"none", "reportGeneralTypeIssues": "none"},
 
@@ -45,7 +46,7 @@
     "__pycache__",
     "venv"
     ]
-    
+
     /*
    "languageserver": {
         "ccls": {
