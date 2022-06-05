@@ -40,7 +40,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'inkarkat/vim-CursorLineCurrentWindow'
 
 " Highlighting trailling whitespaces
-Plug 'ntpeters/vim-better-whitespace'
+" Plug 'ntpeters/vim-better-whitespace'
 
 " command line fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -583,3 +583,8 @@ augroup KeepCentered
 augroup END
 
 " set cursorline
+
+" Highlight the trailing whitespace
+" https://stackoverflow.com/questions/48935451/how-do-i-get-vim-to-highlight-trailing-whitespaces-while-using-vim-at-the-same-t
+highlight RedundantSpaces ctermbg=red guibg=red
+autocmd InsertLeave <buffer> match RedundantSpaces /\s\+$/
