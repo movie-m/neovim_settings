@@ -10,6 +10,9 @@
 
 set cursorline
 
+" Show cursorline also in split opened by fzf
+au WinEnter * setlocal cursorline
+
 " -- disable auto-comment in line continuation -- "
 au bufenter * set fo-=c fo-=r fo-=o
 
