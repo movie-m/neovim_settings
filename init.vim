@@ -2,10 +2,10 @@
 " https://stackoverflow.com/questions/14068751/how-to-hide-cursor-line-when-focus-in-on-other-window-in-vim
 " augroup CursorLine
 "     au!
-"     au VimEnter * setlocal cursorline
-"     au WinEnter * setlocal cursorline
-"     au BufWinEnter * setlocal cursorline
-"     au WinLeave * setlocal nocursorline
+"     au VimEnter * set cursorline
+"     au WinEnter * set cursorline
+"     au BufWinEnter * set cursorline
+"     au WinLeave * set nocursorline
 " augroup END
 
 set cursorline
@@ -40,7 +40,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'inkarkat/vim-CursorLineCurrentWindow'
 
 " Highlighting trailling whitespaces
-" Plug 'ntpeters/vim-better-whitespace'
+Plug 'ntpeters/vim-better-whitespace'
 
 " command line fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -346,7 +346,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 " let wordUnderCursor=expand("<cword>")
-" nnoremap <A-f> :CocSearch
+nnoremap <A-f> :CocSearch
 nnoremap <silent> <Leader>cf :exe 'CocSearch '.expand('<cword>')<CR>
 nmap <silent> <C-a> :call CocActionAsync('runCommand', 'document.searchCurrentWord')<CR>
 
@@ -586,5 +586,7 @@ augroup END
 
 " Highlight the trailing whitespace
 " https://stackoverflow.com/questions/48935451/how-do-i-get-vim-to-highlight-trailing-whitespaces-while-using-vim-at-the-same-t
-highlight RedundantSpaces ctermbg=red guibg=red
-autocmd InsertLeave <buffer> match RedundantSpaces /\s\+$/
+" highlight RedundantSpaces ctermbg=red guibg=red
+" autocmd InsertLeave <buffer> match RedundantSpaces /\s\+$/
+
+set cmdheight=1
