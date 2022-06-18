@@ -1,3 +1,4 @@
+set cursorline
 " -- disable auto-comment in line continuation -- "
 au bufenter * set fo-=c fo-=r fo-=o
 
@@ -79,10 +80,10 @@ Plug 'preservim/nerdtree'
 " asyncronously compiling plugin
 Plug 'skywind3000/asyncrun.vim'
 
-" Using vim's internal terminal 
+" Using vim's internal terminal
 Plug 'skywind3000/vim-terminal-help'
 
-" Building, Testing, and Deploying Tasks 
+" Building, Testing, and Deploying Tasks
 Plug 'skywind3000/asynctasks.vim'
 
 " Use release branch (recommend)
@@ -91,12 +92,11 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " show a git diff
 Plug 'mhinz/vim-signify'
 
-" commenting plugin 
+" commenting plugin
 Plug 'tpope/vim-commentary'
 
 " cpp syntax highlighting
 " Plug 'bfrg/vim-cpp-modern'
-" 
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " tell vim to load the theme/plugin
@@ -110,6 +110,7 @@ Plug 'easymotion/vim-easymotion'
 
 " initialize plugin system
 call plug#end()
+
 
 " -- spell check -- "
 set spell spelllang=en_us
@@ -241,7 +242,6 @@ let g:coc_global_extensions = ['coc-json',
             \'coc-clangd',
             \'coc-marketplace',
             \'coc-sh',
-            \'coc-dash-complete',
             \'coc-jedi',
             \'coc-cmake']
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
@@ -306,9 +306,8 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gh <Plug>(coc-declaration)
 " show definition in a new split
-" nmap <silent> gd :call CocAction('jumpDefinition', 'vsplit')<CR>
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gi <Plug>(coc-implementation)n
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
@@ -441,7 +440,7 @@ autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.root']
 
 " " Put all standard C and C++ keywords under Vim's highlight group 'Statement'
 " " (affects both C and C++ files)
-" let g:cpp_simple_highlight = 
+" let g:cpp_simple_highlight = 1
 
 " -- lsp_cxx_hl -- "
 " let g:lsp_cxx_hl_use_text_props = 1
@@ -507,7 +506,7 @@ let g:asyncrun_rootmarks = ['.root']
 " za to toggle "
 set foldmethod=syntax
 " prevent folding when launched
-set nofoldenable  
+set nofoldenable
 " prevent closing all folded regions when first time zc
 set foldlevel=99
 
@@ -517,7 +516,7 @@ set foldlevel=99
 " noremap <A-k> :resize -1<CR>
 " noremap <A-h> :vertical resize -1<CR>
 " noremap <A-l> :vertical resize +1<CR>
-" ctrl + arrow keys to reize the split windows 
+" ctrl + arrow keys to reize the split windows
 " Turn off the same shortcut in MacOS Preferences -> Keyboard -> Mission Control
 " nnoremap <silent> <C-Up> :resize -1<CR>
 " nnoremap <silent> <C-Down> :resize +1<CR>
@@ -540,7 +539,7 @@ highlight Comment cterm=italic
 set cursorline
 
 " ref: https://stackoverflow.com/questions/50026385/is-it-possible-to-automatically-make-vim-vertically-center-the-line-when-typing
-" keep cursorline centered in insert mode automatically 
+" keep cursorline centered in insert mode automatically
 " when its resides within last 1/3 of buffer on typing any character or entering insert mode in this region
 " augroup autoCenter
 "   autocmd!
@@ -550,7 +549,7 @@ set cursorline
 " augroup END
 
 " ref: https://vi.stackexchange.com/questions/26039/how-to-keep-cursor-vertically-aligned-to-center-even-at-the-end-of-buffer
-" Remapping few keystrokes that can cause the cursor to change lines 
+" Remapping few keystrokes that can cause the cursor to change lines
 " inoremap <CR> <C-\><C-O><C-E><CR>
 " inoremap <BS> <BS><C-O>zz
 " nnoremap o <C-E>o
@@ -558,7 +557,24 @@ set cursorline
 augroup KeepCentered
   autocmd!
   autocmd CursorMoved * normal! zz
+  autocmd CursorMoved * set cul
 augroup END
 
-syntax on
-tnoremap <Esc> <C-\><C-n>
+" syntax on
+
+" To map <Esc> to exit terminal-mode:
+tnoremap <Esc> <C-\><C-n>:q<CR>
+" use bd! to close the terminal since it is special type of buffer
+
+let g:floaterm_position = 'bottom'
+let g:floaterm_autoclose = 2
+let g:floaterm_autoinsert = 1
+let g:floaterm_keymap_new = '<Leader>t'
+let g:floaterm_keymap_prev = '<Leader>pf'
+let g:floaterm_keymap_next = '<Leader>nf'
+let g:floaterm_keymap_first = '<Leader>ff'
+let g:floaterm_keymap_last = '<Leader>lf'
+let g:floaterm_keymap_hide = '<Leader>hf'
+let g:floaterm_keymap_show = '<Leader>sf'
+let g:floaterm_keymap_kill = '<Leader>kf'
+let g:floaterm_keymap_toggle = '<Leader>tf'
