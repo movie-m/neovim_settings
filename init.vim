@@ -584,7 +584,7 @@ let g:floaterm_keymap_last = '<Leader>lt'
 let g:floaterm_keymap_hide = '<Leader>ht'
 let g:floaterm_keymap_show = '<Leader>st'
 let g:floaterm_keymap_kill = '<Leader>kt'
-let g:floaterm_keymap_toggle = '<Leader>tt'
+let g:floaterm_keymap_toggle = '<Leader>gt'
 
 " -- for vim-cmake -- "
 nmap <leader>cg :CMakeGenerate<cr>
