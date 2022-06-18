@@ -27,6 +27,11 @@ call plug#begin('~/.vim/plugged')
 " nvim v0.5.0
 Plug 'kdheepak/lazygit.nvim'
 
+" Build integration
+" ref: https://codevion.github.io/#!vim/cpp2.md
+Plug 'cdelledonne/vim-cmake'
+Plug 'antoinemadec/FixCursorHold.nvim'
+
 " neovim terminal in the floating/popup window
 Plug 'voldikss/vim-floaterm'
 
@@ -457,7 +462,7 @@ map  f <Plug>(easymotion-bd-f)
 nmap f <Plug>(easymotion-overwin-f)
 
 " f{char}{char} to move to {char}{char}
-nmap <Leader>f <Plug>(easymotion-overwin-f2)
+nmap 2f <Plug>(easymotion-overwin-f2)
 
 " Move to line
 map <Leader>l <Plug>(easymotion-bd-jk)
@@ -560,21 +565,33 @@ augroup KeepCentered
   autocmd CursorMoved * set cul
 augroup END
 
-" syntax on
-
 " To map <Esc> to exit terminal-mode:
-tnoremap <Esc> <C-\><C-n>:q<CR>
+" tnoremap <Esc> <C-\><C-n>:q<CR>
+" You need type bd! to kill the terminal buf
+" tnoremap <Esc> <C-\><C-n>
 " use bd! to close the terminal since it is special type of buffer
 
 let g:floaterm_position = 'bottom'
+let g:floaterm_width = 1.0
+let g:floaterm_height = 0.4
 let g:floaterm_autoclose = 2
 let g:floaterm_autoinsert = 1
 let g:floaterm_keymap_new = '<Leader>t'
-let g:floaterm_keymap_prev = '<Leader>pf'
-let g:floaterm_keymap_next = '<Leader>nf'
-let g:floaterm_keymap_first = '<Leader>ff'
-let g:floaterm_keymap_last = '<Leader>lf'
-let g:floaterm_keymap_hide = '<Leader>hf'
-let g:floaterm_keymap_show = '<Leader>sf'
-let g:floaterm_keymap_kill = '<Leader>kf'
-let g:floaterm_keymap_toggle = '<Leader>tf'
+let g:floaterm_keymap_prev = '<Leader>pt'
+let g:floaterm_keymap_next = '<Leader>nt'
+let g:floaterm_keymap_first = '<Leader>ft'
+let g:floaterm_keymap_last = '<Leader>lt'
+let g:floaterm_keymap_hide = '<Leader>ht'
+let g:floaterm_keymap_show = '<Leader>st'
+let g:floaterm_keymap_kill = '<Leader>kt'
+let g:floaterm_keymap_toggle = '<Leader>tt'
+
+" -- for vim-cmake -- "
+nmap <leader>cg :CMakeGenerate<cr>
+nmap <leader>cb :CMakeBuild<cr>
+nmap <leader>ci :CMakeInstall<cr>
+nmap <leader>cq :CMakeClose<cr>
+let g:cmake_link_compile_commands = 1
+let g:cmake_root_markers = ['CMakeLists.txt']
+let g:cmake_default_config	= ''
+let g:cmake_build_dir_location = 'build'
