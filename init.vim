@@ -1,13 +1,3 @@
-" Show cursor line in only one of the split windows
-" https://stackoverflow.com/questions/14068751/how-to-hide-cursor-line-when-focus-in-on-other-window-in-vim
-" augroup CursorLine
-"     au!
-"     au VimEnter * set cursorline
-"     au WinEnter * set cursorline
-"     au BufWinEnter * set cursorline
-"     au WinLeave * set nocursorline
-" augroup END
-
 set cursorline
 
 " -- disable auto-comment in line continuation -- "
@@ -20,6 +10,7 @@ set cinkeys-=:
 " -- set a line width marker -- "
 set colorcolumn=100
 
+" command! vsplit vsplit | set cul
 
 " -- remove color column in quickfix window --"
 au FileType qf setlocal colorcolumn=
@@ -37,8 +28,6 @@ set ruler
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
-Plug 'inkarkat/vim-CursorLineCurrentWindow'
-
 " Highlighting trailling whitespaces
 Plug 'ntpeters/vim-better-whitespace'
 
@@ -121,9 +110,6 @@ Plug 'easymotion/vim-easymotion'
 
 " initialize plugin system
 call plug#end()
-
-" You can keep the highlighting for a particular window by setting a window-local variable
-let w:persistent_cursorline = 1
 
 " -- spell check -- "
 set spell spelllang=en_us
@@ -253,7 +239,6 @@ let g:coc_global_extensions = ['coc-json',
             \'coc-clangd',
             \'coc-marketplace',
             \'coc-sh',
-            \'coc-dash-complete',
             \'coc-jedi',
             \'coc-cmake']
 " \'coc-dash-complete',
@@ -323,6 +308,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gh <Plug>(coc-declaration)
 " show definition in a new split
 " nmap <silent> gd :call CocActionAsync('jumpDefinition', 'vsplit')<CR>
+" nmap <silent> gr :call CocActionAsync('jumpReferences', 'vsplit')<CR>
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -580,9 +566,10 @@ highlight Comment cterm=italic
 augroup KeepCentered
   autocmd!
   autocmd CursorMoved * normal! zz
+  autocmd CursorMoved * :set cul
 augroup END
 
-" set cursorline
+set cursorline
 
 " Highlight the trailing whitespace
 " https://stackoverflow.com/questions/48935451/how-do-i-get-vim-to-highlight-trailing-whitespaces-while-using-vim-at-the-same-t
