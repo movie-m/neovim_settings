@@ -504,6 +504,7 @@ let g:agriculture#disable_smart_quoting = 0
 
 " -- asynctasks -- "
 let g:asyncrun_rootmarks = ['.root']
+noremap <silent><f9> :AsyncTask build<cr>
 
 " -- fold by syntax --"
 " zo to open a fold "
@@ -585,6 +586,7 @@ let g:floaterm_keymap_hide = '<Leader>ht'
 let g:floaterm_keymap_show = '<Leader>st'
 let g:floaterm_keymap_kill = '<Leader>kt'
 let g:floaterm_keymap_toggle = '<Leader>gt'
+nnoremap <Leader>ka :FloatermKill!<CR>
 
 " -- for vim-cmake -- "
 nmap <leader>cg :CMakeGenerate<cr>
