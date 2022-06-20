@@ -10,8 +10,6 @@ set cinkeys-=:
 " -- set a line width marker -- "
 set colorcolumn=100
 
-" command! vsplit vsplit | set cul
-
 " -- remove color column in quickfix window --"
 au FileType qf setlocal colorcolumn=
 
@@ -28,6 +26,12 @@ set ruler
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+" Build integration
+" ref: https://codevion.github.io/#!vim/cpp2.md
+Plug 'cdelledonne/vim-cmake'
+Plug 'antoinemadec/FixCursorHold.nvim'
+" neovim terminal in the floating/popup window
+Plug 'voldikss/vim-floaterm'
 " Highlighting trailling whitespaces
 Plug 'ntpeters/vim-better-whitespace'
 
@@ -85,8 +89,8 @@ Plug 'skywind3000/vim-terminal-help'
 Plug 'skywind3000/asynctasks.vim'
 
 " Use release branch (recommend)
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc.nvim', {'commit': 'ce448a6'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'commit': 'ce448a6'}
 
 " show a git diff
 Plug 'mhinz/vim-signify'
@@ -178,7 +182,6 @@ let g:easy_align_delimiters = {
 \     'right_margin': 0
 \   }
 \ }
-
 
 
 " -- settings for blamer.nvim -- "
@@ -494,6 +497,9 @@ let g:rainbow_conf = {
 let g:python_highlight_all = 1
 let g:python_highlight_space_errors	= 0
 
+" -- coc-pyright -- "
+" ref: https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders#resolve-workspace-folder
+autocmd FileType python let b:coc_root_patterns = ['.root']
 " -- vim agriculture -- "
 nmap <Leader>/ <Plug>RgRawSearch
 vmap <Leader>/ <Plug>RgRawVisualSelection
@@ -502,10 +508,10 @@ nmap <Leader>c <Plug>RgRawWordUnderCursor <cr>
 let g:agriculture#disable_smart_quoting = 0
 
 " -- asynctasks -- "
-" let g:asyncrun_rootmarks = ['.root']
+let g:asyncrun_rootmarks = ['.root']
 let g:asyncrun_open = 6
 " bind the F7 to the uos-build in ~/.config/nvim/tasks.ini
-" noremap <silent><f7> :AsyncTask uos-build<cr>
+noremap <silent><f9> :AsyncTask uos-build<cr>
 
 " -- fold by syntax --"
 " zo to open a fold "
@@ -577,3 +583,37 @@ set cursorline
 " autocmd InsertLeave <buffer> match RedundantSpaces /\s\+$/
 
 set cmdheight=1
+" To map <Esc> to exit terminal-mode:
+" tnoremap <Esc> <C-\><C-n>:q<CR>
+" You need type bd! to kill the terminal buf
+" tnoremap <Esc> <C-\><C-n>
+" use bd! to close the terminal since it is special type of buffer
+
+let g:floaterm_position = 'bottom'
+let g:floaterm_width = 1.0
+let g:floaterm_height = 0.4
+let g:floaterm_autoclose = 2
+let g:floaterm_autoinsert = 1
+let g:floaterm_keymap_new = '<Leader>t'
+let g:floaterm_keymap_prev = '<Leader>pt'
+let g:floaterm_keymap_next = '<Leader>nt'
+let g:floaterm_keymap_first = '<Leader>ft'
+let g:floaterm_keymap_last = '<Leader>lt'
+let g:floaterm_keymap_hide = '<Leader>ht'
+let g:floaterm_keymap_show = '<Leader>st'
+let g:floaterm_keymap_kill = '<Leader>kt'
+let g:floaterm_keymap_toggle = '<Leader>gt'
+nnoremap <Leader>ka :FloatermKill!<CR>
+
+" -- for vim-cmake -- "
+nmap <leader>cg :CMakeGenerate<cr>
+nmap <leader>cb :CMakeBuild<cr>
+nmap <leader>ci :CMakeInstall<cr>
+nmap <leader>cq :CMakeClose<cr>
+let g:cmake_link_compile_commands = 1
+let g:cmake_root_markers = ['CMakeLists.txt']
+let g:cmake_default_config	= ''
+let g:cmake_build_dir_location = 'build'
+
+let &t_TI = ""
+let &t_TE = ""
