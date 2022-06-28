@@ -314,8 +314,8 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
-" nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gd :call CocActionAsync('jumpDefinition', 'e')<CR>
+nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gd :call CocActionAsync('jumpDefinition', 'e')<CR>
 nmap <silent> gh <Plug>(coc-declaration)
 " show definition in a new split
 " nmap <silent> gd :call CocActionAsync('jumpDefinition', 'vsplit')<CR>
