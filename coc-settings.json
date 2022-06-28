@@ -8,6 +8,7 @@
     /*["*"] for all filetypes */
     "semanticTokens.filetypes":["*"],
     "list.previewSplitRight": true,
+    /*"coc.preferences.jumpCommand": "vsplit", */
     /*
     "python.analysis.diagnosticSeverityOverrides": {"reportGeneralTypeIssues": "none",
             "reportOptionalMemberAccess": "none", "reportInvalidStringEscapeSequence": "none"}

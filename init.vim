@@ -18,6 +18,15 @@ set shell=zsh
 " -- display row and column number on the status bar -- "
 set ruler
 
+" -- highlight trailing white-space -- "
+" ref: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
 " -- fix the delete key behavior on mac os -- "
 " set backspace=eol,start,indent
 
@@ -32,8 +41,6 @@ Plug 'cdelledonne/vim-cmake'
 Plug 'antoinemadec/FixCursorHold.nvim'
 " neovim terminal in the floating/popup window
 Plug 'voldikss/vim-floaterm'
-" Highlighting trailling whitespaces
-Plug 'ntpeters/vim-better-whitespace'
 
 " command line fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -307,11 +314,12 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gd :call CocActionAsync('jumpDefinition', 'e')<CR>
 nmap <silent> gh <Plug>(coc-declaration)
 " show definition in a new split
 " nmap <silent> gd :call CocActionAsync('jumpDefinition', 'vsplit')<CR>
-" nmap <silent> gr :call CocActionAsync('jumpReferences', 'vsplit')<CR>
+" nmap <silent> gr :call CocActionAsync('jumpReferences', ':vsplit')<CR>
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -577,12 +585,7 @@ augroup END
 
 set cursorline
 
-" Highlight the trailing whitespace
-" https://stackoverflow.com/questions/48935451/how-do-i-get-vim-to-highlight-trailing-whitespaces-while-using-vim-at-the-same-t
-" highlight RedundantSpaces ctermbg=red guibg=red
-" autocmd InsertLeave <buffer> match RedundantSpaces /\s\+$/
 
-set cmdheight=1
 " To map <Esc> to exit terminal-mode:
 " tnoremap <Esc> <C-\><C-n>:q<CR>
 " You need type bd! to kill the terminal buf
@@ -600,9 +603,9 @@ let g:floaterm_keymap_next = '<Leader>nt'
 let g:floaterm_keymap_first = '<Leader>ft'
 let g:floaterm_keymap_last = '<Leader>lt'
 let g:floaterm_keymap_hide = '<Leader>ht'
-let g:floaterm_keymap_show = '<Leader>st'
+let g:floaterm_keymap_show = '<Leader>gt'
 let g:floaterm_keymap_kill = '<Leader>kt'
-let g:floaterm_keymap_toggle = '<Leader>gt'
+" let g:floaterm_keymap_toggle = '<Leader>st'
 nnoremap <Leader>ka :FloatermKill!<CR>
 
 " -- for vim-cmake -- "
@@ -614,6 +617,3 @@ let g:cmake_link_compile_commands = 1
 let g:cmake_root_markers = ['CMakeLists.txt']
 let g:cmake_default_config	= ''
 let g:cmake_build_dir_location = 'build'
-
-let &t_TI = ""
-let &t_TE = ""
