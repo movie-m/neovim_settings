@@ -20,7 +20,7 @@ set ruler
 
 " -- highlight trailing white-space -- "
 " ref: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
-if (&ft=='qf')
+if (&ft!='qf')
     autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
     match ExtraWhitespace /\s\+$/
     autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
@@ -585,7 +585,6 @@ augroup KeepCentered
 augroup END
 
 set cursorline
-
 
 " To map <Esc> to exit terminal-mode:
 " tnoremap <Esc> <C-\><C-n>:q<CR>
