@@ -37,6 +37,9 @@ endif
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+" semantic highlighting for Python in Neovim
+" Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
+
 " Build integration
 " ref: https://codevion.github.io/#!vim/cpp2.md
 Plug 'cdelledonne/vim-cmake'
@@ -250,7 +253,7 @@ let g:coc_global_extensions = ['coc-json',
             \'coc-clangd',
             \'coc-marketplace',
             \'coc-sh',
-            \'coc-jedi',
+            \'coc-pyright',
             \'coc-cmake']
 " \'coc-dash-complete',
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
@@ -344,6 +347,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 " let wordUnderCursor=expand("<cword>")
+nnoremap <leader>crn :CocCommand workspace.inspectEdit<CR>
 nnoremap <A-f> :CocSearch
 nnoremap <silent> <Leader>cf :exe 'CocSearch '.expand('<cword>')<CR>
 nmap <silent> <C-a> :call CocActionAsync('runCommand', 'document.searchCurrentWord')<CR>
@@ -385,14 +389,14 @@ xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-endif
+" if has('nvim-0.4.0') || has('patch-8.2.0750')
+nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+" endif
 
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
@@ -443,7 +447,7 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 nmap <silent> <C-d> <Plug>(coc-cursors-word)*
 xmap <silent> <C-d> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
 
-" root pattern for python project, especially for coc-pright to work properly
+" root pattern for python project, especially for coc-pyright to work properly
 " https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders#resolve-workspace-folder
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.root']
 
@@ -462,13 +466,8 @@ autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.root']
 " let g:cpp_simple_highlight =
 
 " -- lsp_cxx_hl -- "
-" let g:lsp_cxx_hl_use_text_props = 1
 let g:coc_default_semantic_highlight_groups = 1
 " let g:lsp_cxx_hl_use_nvim_text_props = 1
-" https://github.com/jackguo380/vim-lsp-cxx-highlight/issues/58
-" to avoid broken cursorline
-" hi link LspCxxHlSymParameter LspCxxHlSymField
-" hi link LspCxxHlSymVariable LspCxxHlSymField
 
 " -- Easy Motion -- "
 " <Leader>f{char} to move to {char}

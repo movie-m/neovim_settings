@@ -3,18 +3,31 @@
     "diagnostic.level": "warning",
     "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin/clangd",
     "clangd.enabled": true,
+    /*"clangd.disableDiagnostics": true, */
     "clangd.arguments": ["--background-index=true", "--header-insertion=never", "-clang-tidy=false",
         "-clang-tidy-checks=*"],
+    /*"clangd.disableSnippetCompletion": true,*/
+    "diagnostic.refreshOnInsertMode": false,
+    "diagnostic.enableSign": false,
+    /*
+    "diagnostic.checkCurrentLine": false,
+    "diagnostic.refreshOnSelectMode": false,
+    */
+
     /*["*"] for all filetypes */
     "semanticTokens.filetypes":["*"],
+    /*"semanticTokens.filetypes":["cpp", "c"], */
+    "colors.filetypes": ["*"],
     "list.previewSplitRight": true,
     /*"coc.preferences.jumpCommand": "vsplit", */
+
     /*
     "python.analysis.diagnosticSeverityOverrides": {"reportGeneralTypeIssues": "none",
             "reportOptionalMemberAccess": "none", "reportInvalidStringEscapeSequence": "none"}
     */
-    "python.analysis.diagnosticSeverityOverrides": {"reportOptionalMemberAccess": "none",
-            "reportInvalidStringEscapeSequence": "none"},
+    "python.analysis.diagnosticSeverityOverrides": {"reportInvalidStringEscapeSequence": "none"},
+    // https://github.com/fannheyward/coc-pyright/issues/163
+    "python.analysis.useLibraryCodeForTypes": false,
 
     "jedi.enable": false,
     "jedi.startupMessage": false,
