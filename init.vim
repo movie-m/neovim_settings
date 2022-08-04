@@ -29,6 +29,9 @@ if (&ft!='qf')
     autocmd BufWinLeave * call clearmatches()
 endif
 
+" https://unix.stackexchange.com/questions/574764/vim-automatically-clear-the-command-line
+" autocmd CursorHold * echo ''
+
 " -- fix the delete key behavior on mac os -- "
 " set backspace=eol,start,indent
 
@@ -605,9 +608,15 @@ let g:floaterm_keymap_hide = '<Leader>ht'
 let g:floaterm_keymap_show = '<Leader>gt'
 let g:floaterm_keymap_kill = '<Leader>kt'
 " let g:floaterm_keymap_toggle = '<Leader>st'
+
+
 nnoremap <Leader>ka :FloatermKill!<CR>
 tnoremap <Leader>f+ <cmd>FloatermUpdate --height=1.0<cr>
 tnoremap <Leader>f- <cmd>FloatermUpdate --height=g:floaterm_height<cr>
+
+" https://vi.stackexchange.com/questions/21260/how-to-clear-neovim-terminal-buffer
+nmap <c-w><c-l> :set scrollback=1 \| sleep 100m \| set scrollback=10000 \| :echo ''<CR>
+tmap <c-w><c-l> <c-\><c-n><c-w><c-l>i<c-l>
 
 " -- for vim-cmake -- "
 nmap <leader>cg :CMakeGenerate<cr>
@@ -618,3 +627,15 @@ let g:cmake_link_compile_commands = 1
 let g:cmake_root_markers = ['CMakeLists.txt']
 let g:cmake_default_config	= ''
 let g:cmake_build_dir_location = 'build'
+
+function! ClearTerminal()
+  set scrollback=1
+  let &g:scrollback=1
+  echo &scrollback
+  call feedkeys("\i")
+  call feedkeys("clear\<CR>")
+  call feedkeys("\<C-\>\<C-n>")
+  call feedkeys("\i")
+  sleep 100m
+  let &scrollback=s:scroll_value
+endfunction
