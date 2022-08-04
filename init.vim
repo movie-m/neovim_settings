@@ -606,6 +606,8 @@ let g:floaterm_keymap_show = '<Leader>gt'
 let g:floaterm_keymap_kill = '<Leader>kt'
 " let g:floaterm_keymap_toggle = '<Leader>st'
 nnoremap <Leader>ka :FloatermKill!<CR>
+tnoremap <Leader>f+ <cmd>FloatermUpdate --height=1.0<cr>
+tnoremap <Leader>f- <cmd>FloatermUpdate --height=g:floaterm_height<cr>
 
 " -- for vim-cmake -- "
 nmap <leader>cg :CMakeGenerate<cr>
