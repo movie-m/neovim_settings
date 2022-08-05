@@ -545,7 +545,7 @@ set foldlevel=99
 " noremap <M-l> :vertical resize +1<CR>
 
 " view the expaned full path where the current line resides
-nnoremap <C-p> :echo expand('%:p')<CR>
+" nnoremap <C-p> :echo expand('%:p')<CR>
 
 " Open files by default to the right split
 set splitright
@@ -615,8 +615,8 @@ tnoremap <Leader>f+ <cmd>FloatermUpdate --height=1.0<cr>
 tnoremap <Leader>f- <cmd>FloatermUpdate --height=g:floaterm_height<cr>
 
 " https://vi.stackexchange.com/questions/21260/how-to-clear-neovim-terminal-buffer
-nmap <c-w><c-l> :set scrollback=1 \| sleep 100m \| set scrollback=10000 \| :echo ''<CR>
-tmap <c-w><c-l> <c-\><c-n><c-w><c-l>i<c-l>
+nmap <c-p><c-l> :set scrollback=1 \| sleep 100m \| set scrollback=10000 \| :echo ''<CR>
+tmap <c-p><c-l> <c-\><c-n><c-p><c-l>i<c-l>
 
 " -- for vim-cmake -- "
 nmap <leader>cg :CMakeGenerate<cr>
