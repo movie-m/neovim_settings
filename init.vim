@@ -43,6 +43,9 @@ call plug#begin('~/.vim/plugged')
 " semantic highlighting for Python in Neovim
 " Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 
+" Surrounding text objects
+Plug 'machakann/vim-sandwich'
+
 " Build integration
 " ref: https://codevion.github.io/#!vim/cpp2.md
 Plug 'cdelledonne/vim-cmake'
