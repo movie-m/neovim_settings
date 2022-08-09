@@ -616,6 +616,8 @@ let g:floaterm_keymap_kill = '<Leader>kt'
 nnoremap <Leader>ka :FloatermKill!<CR>
 tnoremap <Leader>f+ <cmd>FloatermUpdate --height=1.0<cr>
 tnoremap <Leader>f- <cmd>FloatermUpdate --height=g:floaterm_height<cr>
+nnoremap <Leader>f+ <cmd>FloatermUpdate --height=1.0<cr>
+nnoremap <Leader>f- <cmd>FloatermUpdate --height=g:floaterm_height<cr>
 
 " https://vi.stackexchange.com/questions/21260/how-to-clear-neovim-terminal-buffer
 nmap <c-p><c-l> :set scrollback=1 \| sleep 100m \| set scrollback=10000 \| :echo ''<CR>
