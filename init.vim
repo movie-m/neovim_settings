@@ -40,9 +40,6 @@ endif
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
-" semantic highlighting for Python in Neovim
-" Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
-
 " Center the vim view horizontally
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -232,7 +229,6 @@ let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
 
 " -- vim-signify default updatetime 4000ms is not good for async update -- "
 set updatetime=100
-
 
 " Make vim treat all json files as jsonc to allow comments
 " ref: https://www.codegrepper.com/code-examples/html/coc+allow+comments+in+json
@@ -634,8 +630,6 @@ let g:goyo_width = 100
 let g:goyo_height = '95%'
 let g:goyo_linenr = 1
 
-" autocmd! User GoyoEnter nested set eventignore=FocusGained
-" autocmd! User GoyoLeave nested set eventignore=
 function! s:goyo_enter()
     " :AirlineToggle
     Limelight
@@ -671,7 +665,7 @@ let g:limelight_conceal_guifg = '#777777'
 let g:limelight_default_coefficient = 0.7
 
 " Number of preceding/following paragraphs to include (default: 0)
-let g:limelight_paragraph_span = 1
+let g:limelight_paragraph_span = 2
 
 " Beginning/end of paragraph
 "   When there's no empty line between the paragraphs
