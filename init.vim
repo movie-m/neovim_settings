@@ -43,6 +43,12 @@ call plug#begin('~/.vim/plugged')
 " semantic highlighting for Python in Neovim
 " Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 
+" Center the vim view horizontally
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+
+Plug 'preservim/vim-pencil'
+
 " Surrounding text objects
 Plug 'machakann/vim-sandwich'
 
@@ -271,7 +277,7 @@ set nobackup
 set nowritebackup
 
 " Give more space for displaying messages.
-set cmdheight=2
+set cmdheight=1
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -622,6 +628,60 @@ nnoremap <Leader>f- <cmd>FloatermUpdate --height=g:floaterm_height<cr>
 " https://vi.stackexchange.com/questions/21260/how-to-clear-neovim-terminal-buffer
 nmap <c-p><c-l> :set scrollback=1 \| sleep 100m \| set scrollback=10000 \| :echo ''<CR>
 tmap <c-p><c-l> <c-\><c-n><c-p><c-l>i<c-l>
+
+" Goyo
+let g:goyo_width = 100
+let g:goyo_height = '95%'
+let g:goyo_linenr = 1
+
+" autocmd! User GoyoEnter nested set eventignore=FocusGained
+" autocmd! User GoyoLeave nested set eventignore=
+function! s:goyo_enter()
+    " :AirlineToggle
+    Limelight
+    " ...
+endfunction
+
+function! s:goyo_leave()
+    " set eventignore=
+    " if executable('tmux') && strlen($TMUX)
+    "   silent !tmux set status on
+    "   silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+    " endif
+    " set showmode
+    " set showcmd
+    " set scrolloff=5
+    Limelight!
+    " ...
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+" Limelight
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+
+" Color name (:help gui-colors) or RGB color
+let g:limelight_conceal_guifg = 'DarkGray'
+let g:limelight_conceal_guifg = '#777777'
+
+" Default: 0.5
+let g:limelight_default_coefficient = 0.7
+
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 1
+
+" Beginning/end of paragraph
+"   When there's no empty line between the paragraphs
+"   and each paragraph starts with indentation
+let g:limelight_bop = '^\s'
+let g:limelight_eop = '\ze\n^\s'
+
+" Highlighting priority (default: 10)
+"   Set it to -1 not to overrule hlsearch
+let g:limelight_priority = -1
 
 " -- for vim-cmake -- "
 nmap <leader>cg :CMakeGenerate<cr>
