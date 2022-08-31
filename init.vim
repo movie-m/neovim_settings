@@ -18,6 +18,8 @@ set shell=zsh
 " -- display row and column number on the status bar -- "
 set ruler
 
+let g:gruvbox_italic=1
+
 " -- highlight trailing white-space -- "
 " ref: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
 if (&ft!='qf')
@@ -203,7 +205,10 @@ let g:easy_align_delimiters = {
 \     'right_margin': 0
 \   }
 \ }
-
+" Default:
+"   If a delimiter is in a highlight group whose name matches
+"   any of the followings, it will be ignored.
+let g:easy_align_ignore_groups = ['String']
 
 " -- settings for blamer.nvim -- "
 let g:blamer_enabled = 0
@@ -328,11 +333,11 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 " nmap <silent> gd :call CocActionAsync('jumpDefinition', 'e')<CR>
-nmap <silent> gh <Plug>(coc-declaration)
+nmap <silent> gy <Plug>(coc-declaration)
 " show definition in a new split
 " nmap <silent> gd :call CocActionAsync('jumpDefinition', 'vsplit')<CR>
 " nmap <silent> gr :call CocActionAsync('jumpReferences', ':vsplit')<CR>
-nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
@@ -625,14 +630,17 @@ nnoremap <Leader>f- <cmd>FloatermUpdate --height=g:floaterm_height<cr>
 nmap <c-p><c-l> :set scrollback=1 \| sleep 100m \| set scrollback=10000 \| :echo ''<CR>
 tmap <c-p><c-l> <c-\><c-n><c-p><c-l>i<c-l>
 
+" enable goyo when start vim
+" autocmd vimenter * Goyo
+
 " Goyo
 let g:goyo_width = 100
-let g:goyo_height = '95%'
+let g:goyo_height = '98%'
 let g:goyo_linenr = 1
 
 function! s:goyo_enter()
     " :AirlineToggle
-    Limelight
+    " Limelight
     " ...
 endfunction
 
