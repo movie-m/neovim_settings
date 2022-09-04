@@ -230,7 +230,7 @@ augroup END
 " show existing tab with 4 spaces width
 set tabstop=4
 " when indenting with '>>', use 4 spaces width
-" when in visual mode, `5>` indent the current line 5 times 
+" when in visual mode, `5>` indent the current line 5 times
 set shiftwidth=4
 " on pressing tab, insert 4 spaces
 set expandtab
@@ -240,10 +240,10 @@ set hidden
 
 
 " -- setting from coc.vim github  --"
-" Note you can add extension names to the g:coc_global_extensions variable, 
-" and coc will install the missing extensions after coc.nvim service started. 
+" Note you can add extension names to the g:coc_global_extensions variable,
+" and coc will install the missing extensions after coc.nvim service started.
 let g:coc_global_extensions = ['coc-json',
-            \'coc-git', 
+            \'coc-git',
             \'coc-clangd',
             \'coc-marketplace',
             \'coc-sh',
