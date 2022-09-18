@@ -1,19 +1,28 @@
 {
-    "diagnostic.level": "hint",
+    "diagnostic.level": "warning",
     "clangd.path":
     "~/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin/clangd",
     "clangd.enabled": true,
     "clangd.arguments": ["--background-index=true", "--header-insertion=never", "-clang-tidy=false",
             "-clang-tidy-checks=*"],
     "semanticTokens.filetypes":["*"],
+    "diagnostic.refreshOnInsertMode": false,
+    "diagnostic.enableSign": false,
 
     /* hide the function docstring or signature
     "signature.hideOnTextChange": true,
     "signature.enable": false,
     */
 
+    /*
     "python.analysis.diagnosticSeverityOverrides": {"reportOptionalMemberAccess":"none",
         "reportInvalidStringEscapeSequence":"none", "reportGeneralTypeIssues": "none"},
+    */
+
+    "python.analysis.diagnosticSeverityOverrides": {"reportInvalidStringEscapeSequence": "none"},
+
+    // https://github.com/fannheyward/coc-pyright/issues/163
+    "python.analysis.useLibraryCodeForTypes": false,
 
     "jedi.enable": false,
     "jedi.startupMessage": false,
