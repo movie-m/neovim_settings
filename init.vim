@@ -27,6 +27,15 @@ call plug#begin('~/.vim/plugged')
 " nvim v0.5.0
 Plug 'kdheepak/lazygit.nvim'
 
+" Center the vim view horizontally
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+
+Plug 'preservim/vim-pencil'
+
+" Surrounding text objects
+Plug 'machakann/vim-sandwich'
+
 " Build integration
 " ref: https://codevion.github.io/#!vim/cpp2.md
 Plug 'cdelledonne/vim-cmake'
@@ -34,9 +43,6 @@ Plug 'antoinemadec/FixCursorHold.nvim'
 
 " neovim terminal in the floating/popup window
 Plug 'voldikss/vim-floaterm'
-
-" Highlighting trailling whitespaces
-Plug 'ntpeters/vim-better-whitespace'
 
 " command line fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -195,7 +201,6 @@ let g:blamer_delay = 500
 
 " -- setting for nerdtree --"
 nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 " nnoremap <C-f> :NERDTreeFind<CR>
 
@@ -247,7 +252,7 @@ let g:coc_global_extensions = ['coc-json',
             \'coc-clangd',
             \'coc-marketplace',
             \'coc-sh',
-            \'coc-jedi',
+            \'coc-pyright',
             \'coc-cmake']
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
@@ -258,7 +263,7 @@ set nobackup
 set nowritebackup
 
 " Give more space for displaying messages.
-set cmdheight=2
+set cmdheight=1
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -336,6 +341,9 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
+" let wordUnderCursor=expand("<cword>")
+nnoremap <leader>crn :CocCommand workspace.inspectEdit<CR>
+nnoremap <A-f> :CocSearch
 nnoremap <silent> <Leader>cf :exe 'CocSearch '.expand('<cword>')<CR>
 " let wordUnderCursor=expand("<cword>")
 " nnoremap <A-f> :CocSearch 
@@ -346,7 +354,7 @@ nmap <leader>f  <Plug>(coc-format-selected)
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd FileType typescript,json setl formatexpr=CocActionAsync('formatSelected')
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
@@ -391,10 +399,10 @@ nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 Format :call CocActionAsync('format')
 
 " Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=? Fold :call     CocActionAsync('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
@@ -452,7 +460,7 @@ autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.root']
 
 " -- lsp_cxx_hl -- "
 " let g:lsp_cxx_hl_use_text_props = 1
-" let g:coc_default_semantic_highlight_groups = 1
+let g:coc_default_semantic_highlight_groups = 1
 " let g:lsp_cxx_hl_use_nvim_text_props = 1
 " https://github.com/jackguo380/vim-lsp-cxx-highlight/issues/58
 " to avoid broken cursorline
@@ -546,7 +554,7 @@ highlight Comment cterm=italic
 " -- set it to a large value to cause the cursor to stay in the middle line when possible --"
 " set so=10000 this will spoil the following settings!
 " We can work around it by using autocommand in normal and insert mode
-set cursorline
+" set cursorline
 
 " ref: https://stackoverflow.com/questions/50026385/is-it-possible-to-automatically-make-vim-vertically-center-the-line-when-typing
 " keep cursorline centered in insert mode automatically
@@ -567,8 +575,10 @@ set cursorline
 augroup KeepCentered
   autocmd!
   autocmd CursorMoved * normal! zz
-  autocmd CursorMoved * set cul
+  autocmd CursorMoved * :set cul
 augroup END
+
+set cursorline
 
 " To map <Esc> to exit terminal-mode:
 " tnoremap <Esc> <C-\><C-n>:q<CR>
@@ -587,10 +597,73 @@ let g:floaterm_keymap_next = '<Leader>nt'
 let g:floaterm_keymap_first = '<Leader>ft'
 let g:floaterm_keymap_last = '<Leader>lt'
 let g:floaterm_keymap_hide = '<Leader>ht'
-let g:floaterm_keymap_show = '<Leader>st'
+let g:floaterm_keymap_show = '<Leader>gt'
 let g:floaterm_keymap_kill = '<Leader>kt'
-let g:floaterm_keymap_toggle = '<Leader>gt'
+let g:floaterm_keymap_toggle = '<Leader>st'
 nnoremap <Leader>ka :FloatermKill!<CR>
+tnoremap <Leader>f+ <cmd>FloatermUpdate --height=1.0<cr>
+tnoremap <Leader>f- <cmd>FloatermUpdate --height=g:floaterm_height<cr>
+nnoremap <Leader>f+ <cmd>FloatermUpdate --height=1.0<cr>
+nnoremap <Leader>f- <cmd>FloatermUpdate --height=g:floaterm_height<cr>
+
+" https://vi.stackexchange.com/questions/21260/how-to-clear-neovim-terminal-buffer
+nmap <c-p><c-l> :set scrollback=1 \| sleep 100m \| set scrollback=10000 \| :echo ''<CR>
+tmap <c-p><c-l> <c-\><c-n><c-p><c-l>i<c-l>
+
+" enable goyo when start vim
+" autocmd vimenter * Goyo
+
+" Goyo
+let g:goyo_width = 100
+let g:goyo_height = '98%'
+let g:goyo_linenr = 1
+
+function! s:goyo_enter()
+    " :AirlineToggle
+    " Limelight
+    " ...
+endfunction
+
+function! s:goyo_leave()
+    " set eventignore=
+    " if executable('tmux') && strlen($TMUX)
+    "   silent !tmux set status on
+    "   silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+    " endif
+    " set showmode
+    " set showcmd
+    " set scrolloff=5
+    Limelight!
+    " ...
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+" Limelight
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+
+" Color name (:help gui-colors) or RGB color
+let g:limelight_conceal_guifg = 'DarkGray'
+let g:limelight_conceal_guifg = '#777777'
+
+" Default: 0.5
+let g:limelight_default_coefficient = 0.7
+
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 2
+
+" Beginning/end of paragraph
+"   When there's no empty line between the paragraphs
+"   and each paragraph starts with indentation
+let g:limelight_bop = '^\s'
+let g:limelight_eop = '\ze\n^\s'
+
+" Highlighting priority (default: 10)
+"   Set it to -1 not to overrule hlsearch
+let g:limelight_priority = -1
 
 " -- for vim-cmake -- "
 nmap <leader>cg :CMakeGenerate<cr>
