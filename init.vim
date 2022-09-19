@@ -276,6 +276,9 @@ else
   set signcolumn=yes
 endif
 
+
+" shortcut to switch between header and source using clangd
+nmap <silent> <C-h> :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -462,7 +465,7 @@ map  f <Plug>(easymotion-bd-f)
 nmap f <Plug>(easymotion-overwin-f)
 
 " f{char}{char} to move to {char}{char}
-nmap 2f <Plug>(easymotion-overwin-f2)
+nmap <Leader>f <Plug>(easymotion-overwin-f2)
 
 " Move to line
 map <Leader>l <Plug>(easymotion-bd-jk)
@@ -504,6 +507,7 @@ let g:agriculture#disable_smart_quoting = 0
 
 " -- asynctasks -- "
 let g:asyncrun_rootmarks = ['.root']
+let g:asyncrun_open = 6
 noremap <silent><f9> :AsyncTask build<cr>
 
 " -- fold by syntax --"
