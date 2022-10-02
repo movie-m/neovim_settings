@@ -16,6 +16,17 @@ set shell=zsh
 " -- display row and column number on the status bar -- "
 set ruler
 
+" -- highlight trailing white-space -- "
+" ref: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
+if (&ft!='qf')
+    autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+    match ExtraWhitespace /\s\+$/
+    autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+    autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+    autocmd BufWinLeave * call clearmatches()
+endif
+
 " -- fix the delete key behavior on mac os -- "
 " set backspace=eol,start,indent
 
@@ -346,7 +357,7 @@ nnoremap <leader>crn :CocCommand workspace.inspectEdit<CR>
 nnoremap <A-f> :CocSearch
 nnoremap <silent> <Leader>cf :exe 'CocSearch '.expand('<cword>')<CR>
 " let wordUnderCursor=expand("<cword>")
-" nnoremap <A-f> :CocSearch 
+" nnoremap <A-f> :CocSearch
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
