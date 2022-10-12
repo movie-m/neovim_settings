@@ -92,7 +92,6 @@ plugins=(
     zsh-autosuggestions
 )
 # zsh-autosuggestions
-
 # zsh-completions
 autoload  -U compinit && compinit
 source $ZSH/oh-my-zsh.sh
