@@ -35,6 +35,9 @@ endif
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+" commenter
+Plug 'preservim/nerdcommenter'
+
 " nvim v0.5.0
 Plug 'kdheepak/lazygit.nvim'
 
@@ -115,7 +118,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mhinz/vim-signify'
 
 " commenting plugin
-Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-commentary'
 
 " cpp syntax highlighting
 " Plug 'bfrg/vim-cpp-modern'
@@ -285,12 +288,12 @@ set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-if has("nvim-0.5.0") || has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
+" if has("nvim-0.5.0") || has("patch-8.1.1564")
+"   " Recently vim can merge signcolumn and number column into one
+"   set signcolumn=number
+" else
+"   set signcolumn=yes
+" endif
 
 
 " shortcut to switch between header and source using clangd
@@ -685,3 +688,34 @@ let g:cmake_link_compile_commands = 1
 let g:cmake_root_markers = ['CMakeLists.txt']
 let g:cmake_default_config	= ''
 let g:cmake_build_dir_location = 'build'
+
+" https://stackoverflow.com/questions/67975383/is-there-a-way-to-show-both-line-numbers-and-git-status-in-vim-when-using-the-ai
+" show both git status and line number
+set signcolumn=yes
+
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'cpp': { 'left': '/*','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1

@@ -1,11 +1,12 @@
 {
-    "diagnostic.level": "warning",
+    "diagnostic.level": "error",
     "clangd.path":
     "~/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin/clangd",
     "clangd.enabled": true,
     "clangd.arguments": ["--background-index=true", "--header-insertion=never", "-clang-tidy=false",
             "-clang-tidy-checks=*"],
-    "semanticTokens.filetypes":["*"],
+    // "semanticTokens.filetypes":["*"],
+    "semanticTokens.enable": true,
     "diagnostic.refreshOnInsertMode": false,
     "diagnostic.enableSign": false,
 
