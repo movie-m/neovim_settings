@@ -1,7 +1,7 @@
 {
     "diagnostic.showUnused": false,
-    "diagnostic.level": "warning",
-    "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin/clangd",
+    "diagnostic.level": "error",
+    "clangd.path": "~.config/coc/extensions/coc-clangd-data/install/15.0.1/clangd_15.0.1/bin/clangd",
     "clangd.enabled": true,
     /*"clangd.disableDiagnostics": true, */
     "clangd.arguments": ["--background-index=true", "--header-insertion=never", "-clang-tidy=false",
@@ -9,13 +9,15 @@
     /*"clangd.disableSnippetCompletion": true,*/
     "diagnostic.refreshOnInsertMode": false,
     "diagnostic.enableSign": false,
+    "diagnostic.signLevel": "error",
     /*
     "diagnostic.checkCurrentLine": false,
     "diagnostic.refreshOnSelectMode": false,
     */
 
     /*["*"] for all filetypes */
-    "semanticTokens.filetypes":["*"],
+    // "semanticTokens.filetypes":["*"],
+    "semanticTokens.enable": true,
     /*"semanticTokens.filetypes":["cpp", "c"], */
     "colors.filetypes": ["*"],
     "list.previewSplitRight": true,
@@ -27,52 +29,5 @@
     */
     "python.analysis.diagnosticSeverityOverrides": {"reportInvalidStringEscapeSequence": "none"},
     // https://github.com/fannheyward/coc-pyright/issues/163
-    "python.analysis.useLibraryCodeForTypes": false,
-
-    "jedi.enable": false,
-    "jedi.startupMessage": false,
-    "jedi.markupKindPreferred": "plaintext",
-    "jedi.trace.server": "off",
-    "jedi.jediSettings.autoImportModules": [],
-    "jedi.jediSettings.caseInsensitiveCompletion": true,
-    "jedi.jediSettings.debug": false,
-    "jedi.executable.command": "jedi-language-server",
-    "jedi.executable.args": [],
-    "jedi.codeAction.nameExtractFunction": "jls_extract_def",
-    "jedi.codeAction.nameExtractVariable": "jls_extract_var",
-    "jedi.completion.disableSnippets": false,
-    "jedi.completion.resolveEagerly": false,
-    "jedi.completion.ignorePatterns": [],
-    "jedi.diagnostics.enable": true,
-    "jedi.diagnostics.didOpen": true,
-    "jedi.diagnostics.didChange": true,
-    "jedi.diagnostics.didSave": true,
-    "jedi.hover.enable": true,
-    "jedi.hover.disable.keyword.all": false,
-    "jedi.hover.disable.keyword.names": [],
-    "jedi.hover.disable.keyword.fullNames": [],
-    "jedi.workspace.extraPaths": [],
-    "jedi.workspace.symbols.maxSymbols": 20,
-    "jedi.workspace.symbols.ignoreFolders": [
-    ".nox",
-    ".tox",
-    ".venv",
-    "__pycache__",
-    "venv"
-    ]
-
-   /* "languageserver": {
-        "ccls": {
-        "command": "ccls",
-        "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
-        "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
-        "initializationOptions": {
-            "cache": {
-              "directory": ".cache/ccls/"
-            },
-            "highlight": {"lsRanges": true }
-          }
-      }
-    }
-    */
+    "python.analysis.useLibraryCodeForTypes": false
 }

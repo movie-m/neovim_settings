@@ -20,8 +20,8 @@ set ruler
 
 let g:gruvbox_italic=1
 
-" -- highlight trailing white-space -- "
-" ref: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
+" " -- highlight trailing white-space -- "
+" " ref: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
 if (&ft!='qf')
     autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
     match ExtraWhitespace /\s\+$/
@@ -113,6 +113,7 @@ Plug 'skywind3000/asynctasks.vim'
 
 " Use release branch (recommend)
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': '1d3c525e2d'}
 " Plug 'neoclide/coc.nvim', {'commit': 'ce448a6'}
 
 " show a git diff
@@ -262,6 +263,7 @@ set hidden
 " Note you can add extension names to the g:coc_global_extensions variable,
 " and coc will install the missing extensions after coc.nvim service started.
 let g:coc_global_extensions = ['coc-json',
+            \'coc-snippets',
             \'coc-git',
             \'coc-clangd',
             \'coc-marketplace',
@@ -300,39 +302,53 @@ set shortmess+=c
 " https://stackoverflow.com/questions/67975383/is-there-a-way-to-show-both-line-numbers-and-git-status-in-vim-when-using-the-ai
 set signcolumn=yes
 
-" shortcut to switch between header and source using clangd
-nmap <silent> <C-h> :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
+" Use <tab> and <S-tab> to navigate completion list: >
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+let col = col('.') - 1
+return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+" Insert <tab> when previous text is space, refresh completion if not.
+inoremap <silent><expr> <TAB>
+\ coc#pum#visible() ? coc#pum#next(1):
+\ <SID>check_back_space() ? "\<Tab>" :
+\ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" Use <CR> to confirm completion, use:
+inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
+
+" To make <CR> to confirm selection of selected complete item or notify coc.nvim
+" to format on enter, use:
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
+            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Map <tab> for trigger completion, completion confirm, snippet expand and jump
+" like VSCode:
+inoremap <silent><expr> <TAB>
+\ coc#pum#visible() ? coc#_select_confirm() :
+\ coc#expandableOrJumpable() ?
+\ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+\ <SID>check_back_space() ? "\<TAB>" :
+\ coc#refresh()
+
+let g:coc_snippet_next = '<tab>'
+
+
+" Use <c-space> to trigger completion:
+  if has('nvim')
+    inoremap <silent><expr> <c-space> coc#refresh()
+  else
+    inoremap <silent><expr> <c-@> coc#refresh()
+  endif
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" shortcut to switch between header and source using clangd
+nmap <silent> <C-h> :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -710,3 +726,5 @@ function! ClearTerminal()
   sleep 100m
   let &scrollback=s:scroll_value
 endfunction
+
+hi SpellLocal cterm=none
