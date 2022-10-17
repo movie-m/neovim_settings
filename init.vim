@@ -725,3 +725,4 @@ function! ClearTerminal()
 endfunction
 
 hi SpellLocal cterm=none
+hi SpellRare cterm=none
