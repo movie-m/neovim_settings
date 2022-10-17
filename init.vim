@@ -712,17 +712,33 @@ let g:cmake_root_markers = ['CMakeLists.txt']
 let g:cmake_default_config	= ''
 let g:cmake_build_dir_location = 'build'
 
-function! ClearTerminal()
-  set scrollback=1
-  let &g:scrollback=1
-  echo &scrollback
-  call feedkeys("\i")
-  call feedkeys("clear\<CR>")
-  call feedkeys("\<C-\>\<C-n>")
-  call feedkeys("\i")
-  sleep 100m
-  let &scrollback=s:scroll_value
-endfunction
-
 hi SpellLocal cterm=none
 hi SpellRare cterm=none
+" hi SpellBad cterm=none
+
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'cpp': { 'left': '/* ','right': ' */' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
