@@ -458,6 +458,11 @@ nmap <leader>x  <Plug>(coc-cursors-operator)
 " https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders#resolve-workspace-folder
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.root']
 
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
 " " -- vim-cpp-modern for c/c++ syntax highlighting -- "
 " " Disable function highlighting (affects both C and C++ files)
 " let g:cpp_function_highlight = 1

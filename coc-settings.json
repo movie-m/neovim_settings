@@ -5,7 +5,7 @@
     "clangd.enabled": true,
     "clangd.arguments": ["--background-index=true", "--header-insertion=never", "-clang-tidy=false",
             "-clang-tidy-checks=*"],
-    "semanticTokens.enable": true,
+    "semanticTokens.filetypes": ["*"],
     "diagnostic.refreshOnInsertMode": false,
     "diagnostic.enableSign": false,
 
