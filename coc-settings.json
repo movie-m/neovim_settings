@@ -10,6 +10,12 @@
     "diagnostic.refreshOnInsertMode": false,
     "diagnostic.enableSign": false,
     "diagnostic.signLevel": "error",
+    "cpp.inlayHints.variableTypes.enabled": true,
+    "cpp.inlayHints.parameterNames.enabled": "all",
+    "cpp.inlayHints.enumMemberValues.enabled": true,
+    "cpp.inlayHints.parameterTypes.enabled": true,
+    "cpp.inlayHints.functionLikeReturnTypes.enabled": true,
+    "cpp.inlayHints.propertyDeclarationTypes.enabled": true,
     /*
     "diagnostic.checkCurrentLine": false,
     "diagnostic.refreshOnSelectMode": false,
