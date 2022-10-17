@@ -117,11 +117,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " show a git diff
 Plug 'mhinz/vim-signify'
 
-" commenting plugin
-" Plug 'tpope/vim-commentary'
-
-" cpp syntax highlighting
-" Plug 'bfrg/vim-cpp-modern'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " tell vim to load the theme/plugin
@@ -161,8 +156,8 @@ set number
 let mapleader = ","
 
 " leader+w to save
-inoremap <leader>w <esc>:w<cr>
-noremap <leader>w :w<cr>
+" inoremap <leader>w <esc>:w<cr>
+" noremap <leader>w :w<cr>
 
 " mapping delay
 set timeoutlen=500
@@ -234,7 +229,6 @@ let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
 " -- vim-signify default updatetime 4000ms is not good for async update -- "
 set updatetime=100
 
-
 " Make vim treat all json files as jsonc to allow comments
 " ref: https://www.codegrepper.com/code-examples/html/coc+allow+comments+in+json
 augroup JsonToJsonc
@@ -262,12 +256,17 @@ set hidden
 " Note you can add extension names to the g:coc_global_extensions variable,
 " and coc will install the missing extensions after coc.nvim service started.
 let g:coc_global_extensions = ['coc-json',
+            \'coc-snippets',
             \'coc-git',
             \'coc-clangd',
             \'coc-marketplace',
             \'coc-sh',
             \'coc-pyright',
-            \'coc-cmake']
+            \'coc-cmake',
+            \'coc-webview',
+            \'coc-markdownlint',
+            \'coc-markdown-preview-enhanced',
+            \'coc-clangd']
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
 set encoding=UTF-8
@@ -295,39 +294,58 @@ set shortmess+=c
 "   set signcolumn=yes
 " endif
 
+" Show both line numbers and git status
+" https://stackoverflow.com/questions/67975383/is-there-a-way-to-show-both-line-numbers-and-git-status-in-vim-when-using-the-ai
+set signcolumn=yes
 
-" shortcut to switch between header and source using clangd
-nmap <silent> <C-h> :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
+" Use <tab> and <S-tab> to navigate completion list: >
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+let col = col('.') - 1
+return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+" Insert <tab> when previous text is space, refresh completion if not.
+inoremap <silent><expr> <TAB>
+\ coc#pum#visible() ? coc#pum#next(1):
+\ <SID>check_back_space() ? "\<Tab>" :
+\ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" Use <CR> to confirm completion, use:
+inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
+
+" To make <CR> to confirm selection of selected complete item or notify coc.nvim
+" to format on enter, use:
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
+            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Map <tab> for trigger completion, completion confirm, snippet expand and jump
+" like VSCode:
+inoremap <silent><expr> <TAB>
+\ coc#pum#visible() ? coc#_select_confirm() :
+\ coc#expandableOrJumpable() ?
+\ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+\ <SID>check_back_space() ? "\<TAB>" :
+\ coc#refresh()
+
+let g:coc_snippet_next = '<tab>'
+
+
+" Use <c-space> to trigger completion:
+  if has('nvim')
+    inoremap <silent><expr> <c-space> coc#refresh()
+  else
+    inoremap <silent><expr> <c-@> coc#refresh()
+  endif
+
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" shortcut to switch between header and source using clangd
+nmap <silent> <C-h> :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -446,45 +464,25 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " Start multiple cursor sessions
 " add current character range to cursors
-nmap <silent> <C-c> <Plug>(coc-cursors-position)
+" nmap <silent> <C-c> <Plug>(coc-cursors-position)
 " add current word range to cursors.
-nmap <silent> <C-d> <Plug>(coc-cursors-word)
+" nmap <silent> <C-d> <Plug>(coc-cursors-word)
 " add current visual selected range to cursors.
-xmap <silent> <C-d> <Plug>(coc-cursors-range)
+" xmap <silent> <C-d> <Plug>(coc-cursors-range)
 " use normal command like `<leader>xi(`
-nmap <leader>x  <Plug>(coc-cursors-operator)
+" nmap <leader>x  <Plug>(coc-cursors-operator)
+nmap <silent> <C-d> <Plug>(coc-cursors-word)*
+xmap <silent> <C-d> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
 
 " root pattern for python project, especially for coc-pright to work properly
 " https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders#resolve-workspace-folder
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.root']
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
 
-" " -- vim-cpp-modern for c/c++ syntax highlighting -- "
-" " Disable function highlighting (affects both C and C++ files)
-" let g:cpp_function_highlight = 1
+" " -- vim-cpp-modern for c/c++ syntax highlighting -- " " Disable function highlighting (affects both C and C++ files) let g:cpp_function_highlight = 1
 
-" " Enable highlighting of C++11 attributes
-" let g:cpp_attributes_highlight = 1
 
-" " Highlight struct/class member variables (affects both C and C++ files)
-" let g:cpp_member_highlight = 1
-
-" " Put all standard C and C++ keywords under Vim's highlight group 'Statement'
-" " (affects both C and C++ files)
-" let g:cpp_simple_highlight = 1
-
-" -- lsp_cxx_hl -- "
-" let g:lsp_cxx_hl_use_text_props = 1
 let g:coc_default_semantic_highlight_groups = 1
-" let g:lsp_cxx_hl_use_nvim_text_props = 1
-" https://github.com/jackguo380/vim-lsp-cxx-highlight/issues/58
-" to avoid broken cursorline
-" hi link LspCxxHlSymParameter LspCxxHlSymField
-" hi link LspCxxHlSymVariable LspCxxHlSymField
 
 " -- Easy Motion -- "
 " <Leader>f{char} to move to {char}
@@ -529,7 +527,8 @@ autocmd FileType python let b:coc_root_patterns = ['.root']
 " -- vim agriculture -- "
 nmap <Leader>/ <Plug>RgRawSearch
 vmap <Leader>/ <Plug>RgRawVisualSelection
-nmap <Leader>* <Plug>RgRawWordUnderCursor
+" nmap <Leader>* <Plug>RgRawWordUnderCursor <cr>
+nmap <Leader>w <Plug>RgRawWordUnderCursor <cr>
 let g:agriculture#disable_smart_quoting = 0
 
 " -- asynctasks -- "
@@ -618,7 +617,8 @@ let g:floaterm_keymap_last = '<Leader>lt'
 let g:floaterm_keymap_hide = '<Leader>ht'
 let g:floaterm_keymap_show = '<Leader>gt'
 let g:floaterm_keymap_kill = '<Leader>kt'
-let g:floaterm_keymap_toggle = '<Leader>st'
+" let g:floaterm_keymap_toggle = '<Leader>st'
+
 nnoremap <Leader>ka :FloatermKill!<CR>
 tnoremap <Leader>f+ <cmd>FloatermUpdate --height=1.0<cr>
 tnoremap <Leader>f- <cmd>FloatermUpdate --height=g:floaterm_height<cr>
@@ -698,7 +698,12 @@ let g:cmake_build_dir_location = 'build'
 " show both git status and line number
 set signcolumn=yes
 
+" NERDCommenter
+" https://stackoverflow.com/questions/40833296/how-to-disable-internal-key-bindings-in-vim
+" Disable built-in cc (delete and then insert)
+map cc <Nop>
 " Create default mappings
+
 let g:NERDCreateDefaultMappings = 1
 
 " Add spaces after comment delimiters by default
@@ -722,5 +727,5 @@ let g:NERDCommentEmptyLines = 1
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
 
-" Enable NERDCommenterToggle to check all selected lines is commented or not 
+" Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
