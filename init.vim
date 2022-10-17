@@ -42,6 +42,8 @@ endif
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+Plug 'preservim/nerdcommenter'
+
 " Center the vim view horizontally
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -113,8 +115,6 @@ Plug 'skywind3000/asynctasks.vim'
 
 " Use release branch (recommend)
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'neoclide/coc.nvim', {'branch': '1d3c525e2d'}
-" Plug 'neoclide/coc.nvim', {'commit': 'ce448a6'}
 
 " show a git diff
 Plug 'mhinz/vim-signify'
