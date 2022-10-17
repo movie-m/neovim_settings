@@ -714,7 +714,7 @@ let g:cmake_build_dir_location = 'build'
 
 hi SpellLocal cterm=none
 hi SpellRare cterm=none
-" hi SpellBad cterm=none
+hi SpellBad cterm=none
 
 " Create default mappings
 let g:NERDCreateDefaultMappings = 1
