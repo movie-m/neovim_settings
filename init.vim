@@ -119,9 +119,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " show a git diff
 Plug 'mhinz/vim-signify'
 
-" commenting plugin
-Plug 'tpope/vim-commentary'
-
 " cpp syntax highlighting
 " Plug 'bfrg/vim-cpp-modern'
 
