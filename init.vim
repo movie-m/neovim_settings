@@ -119,11 +119,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " show a git diff
 Plug 'mhinz/vim-signify'
 
-" cpp syntax highlighting
-" Plug 'bfrg/vim-cpp-modern'
-
-Plug 'jackguo380/vim-lsp-cxx-highlight'
-
 " tell vim to load the theme/plugin
 Plug 'morhetz/gruvbox'
 
@@ -481,23 +476,7 @@ xmap <silent> <C-d> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)
 " https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders#resolve-workspace-folder
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.root']
 
-" " -- vim-cpp-modern for c/c++ syntax highlighting -- "
-" " Disable function highlighting (affects both C and C++ files)
-" let g:cpp_function_highlight = 1
-
-" " Enable highlighting of C++11 attributes
-" let g:cpp_attributes_highlight = 1
-
-" " Highlight struct/class member variables (affects both C and C++ files)
-" let g:cpp_member_highlight = 1
-
-" " Put all standard C and C++ keywords under Vim's highlight group 'Statement'
-" " (affects both C and C++ files)
-" let g:cpp_simple_highlight =
-
-" -- lsp_cxx_hl -- "
 let g:coc_default_semantic_highlight_groups = 1
-" let g:lsp_cxx_hl_use_nvim_text_props = 1
 
 " -- Easy Motion -- "
 " <Leader>f{char} to move to {char}
@@ -716,6 +695,11 @@ hi SpellLocal cterm=none
 hi SpellRare cterm=none
 " hi SpellBad cterm=none
 hi SpellCap cterm=none
+
+" NERDCommenter
+" https://stackoverflow.com/questions/40833296/how-to-disable-internal-key-bindings-in-vim
+" Disable built-in cc (delete and then insert)
+map cc <Nop>
 
 " Create default mappings
 let g:NERDCreateDefaultMappings = 1
