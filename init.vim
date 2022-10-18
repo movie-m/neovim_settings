@@ -160,8 +160,8 @@ set number
 let mapleader = ","
 
 " leader+w to save
-inoremap <leader>w <esc>:w<cr>
-noremap <leader>w :w<cr>
+" inoremap <leader>w <esc>:w<cr>
+" noremap <leader>w :w<cr>
 
 " mapping delay
 set timeoutlen=500
@@ -542,7 +542,7 @@ autocmd FileType python let b:coc_root_patterns = ['.root']
 nmap <Leader>/ <Plug>RgRawSearch
 vmap <Leader>/ <Plug>RgRawVisualSelection
 " nmap <Leader>* <Plug>RgRawWordUnderCursor
-nmap <Leader>c <Plug>RgRawWordUnderCursor <cr>
+nmap <Leader>w <Plug>RgRawWordUnderCursor <cr>
 let g:agriculture#disable_smart_quoting = 0
 
 " -- asynctasks -- "
