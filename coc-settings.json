@@ -8,6 +8,7 @@
     "semanticTokens.enable": true,
     "diagnostic.refreshOnInsertMode": false,
     "diagnostic.enableSign": false,
+    "inlayHint.enable": true,
 
     /* hide the function docstring or signature
     "signature.hideOnTextChange": true,
