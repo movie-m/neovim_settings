@@ -42,6 +42,8 @@ endif
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+Plug 'kdheepak/lazygit.nvim'
+
 Plug 'preservim/nerdcommenter'
 
 " Center the vim view horizontally
