@@ -319,18 +319,6 @@ inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
             \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Map <tab> for trigger completion, completion confirm, snippet expand and jump
-" like VSCode:
-" inoremap <silent><expr> <TAB>
-" \ coc#pum#visible() ? coc#_select_confirm() :
-" \ coc#expandableOrJumpable() ?
-" \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-" \ <SID>check_back_space() ? "\<TAB>" :
-" \ coc#refresh()
-
-" let g:coc_snippet_next = '<tab>'
-
-
 " Use <c-space> to trigger completion:
   if has('nvim')
     inoremap <silent><expr> <c-space> coc#refresh()
