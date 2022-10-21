@@ -263,7 +263,9 @@ let g:coc_global_extensions = ['coc-json',
             \'coc-marketplace',
             \'coc-sh',
             \'coc-pyright',
-            \'coc-cmake']
+            \'coc-cmake',
+            \'coc-sh',
+            \'coc-markdownlint']
 " \'coc-dash-complete',
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
@@ -511,7 +513,7 @@ autocmd FileType python let b:coc_root_patterns = ['.root']
 nmap <Leader>/ <Plug>RgRawSearch
 vmap <Leader>/ <Plug>RgRawVisualSelection
 " nmap <Leader>* <Plug>RgRawWordUnderCursor
-nmap <Leader>w <Plug>RgRawWordUnderCursor <cr>
+nmap <Leader>cw <Plug>RgRawWordUnderCursor <cr>
 let g:agriculture#disable_smart_quoting = 0
 
 " -- asynctasks -- "

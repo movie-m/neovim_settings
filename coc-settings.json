@@ -35,5 +35,15 @@
     */
     "python.analysis.diagnosticSeverityOverrides": {"reportInvalidStringEscapeSequence": "none"},
     // https://github.com/fannheyward/coc-pyright/issues/163
-    "python.analysis.useLibraryCodeForTypes": false
+    "python.analysis.useLibraryCodeForTypes": false,
+
+    "languageserver":
+    {
+        "dockerfile":
+        {
+            "command": "docker-langserver",
+            "filetypes": ["dockerfile"],
+            "args": ["--stdio"]
+        }
+    }
 }
