@@ -485,8 +485,8 @@ map <Leader>l <Plug>(easymotion-bd-jk)
 nmap <Leader>l <Plug>(easymotion-overwin-line)
 
 " Move to word
-map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
+" map  <Leader>w <Plug>(easymotion-bd-w)
+" nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 " -- rainbow for highlighting matching brackets -- "
 " https://vi.stackexchange.com/questions/14803/cmake-syntax-highlighting-not-working-as-expected
