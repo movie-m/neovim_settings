@@ -513,7 +513,7 @@ autocmd FileType python let b:coc_root_patterns = ['.root']
 nmap <Leader>/ <Plug>RgRawSearch
 vmap <Leader>/ <Plug>RgRawVisualSelection
 " nmap <Leader>* <Plug>RgRawWordUnderCursor
-nmap <Leader>cw <Plug>RgRawWordUnderCursor <cr>
+nmap <Leader>w <Plug>RgRawWordUnderCursor <cr>
 let g:agriculture#disable_smart_quoting = 0
 
 " -- asynctasks -- "
