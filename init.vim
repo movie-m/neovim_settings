@@ -700,7 +700,7 @@ set nospell
 " Enable lua syntax highlighing
 let g:vimsyn_embed = 'l'
 
-Plug 'numToStr/Comment.nvim'
+" Plug 'numToStr/Comment.nvim'
 lua << EOF
 require('Comment').setup()
 local ft = require('Comment.ft')
