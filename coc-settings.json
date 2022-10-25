@@ -1,7 +1,7 @@
 {
     "diagnostic.showUnused": false,
     "diagnostic.level": "warning",
-    "clangd.path": "~.config/coc/extensions/coc-clangd-data/install/15.0.1/clangd_15.0.1/bin/clangd",
+    "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.3/clangd_15.0.3/bin/clangd",
     "clangd.enabled": true,
     /*"clangd.disableDiagnostics": true, */
     "clangd.arguments": ["--background-index=true", "--header-insertion=never", "-clang-tidy=false",
@@ -10,12 +10,7 @@
     "diagnostic.refreshOnInsertMode": false,
     "diagnostic.enableSign": false,
     "diagnostic.signLevel": "error",
-    "cpp.inlayHints.variableTypes.enabled": true,
-    "cpp.inlayHints.parameterNames.enabled": "all",
-    "cpp.inlayHints.enumMemberValues.enabled": true,
-    "cpp.inlayHints.parameterTypes.enabled": true,
-    "cpp.inlayHints.functionLikeReturnTypes.enabled": true,
-    "cpp.inlayHints.propertyDeclarationTypes.enabled": true,
+
     /*
     "diagnostic.checkCurrentLine": false,
     "diagnostic.refreshOnSelectMode": false,
