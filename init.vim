@@ -35,13 +35,14 @@ endif
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
-Plug 'azabiong/vim-highlighter'
+Plug 'chipsenkbeil/distant.nvim'
 
-" commenter
-Plug 'preservim/nerdcommenter'
+Plug 'azabiong/vim-highlighter'
 
 " nvim v0.5.0
 Plug 'kdheepak/lazygit.nvim'
+
+Plug 'numToStr/Comment.nvim'
 
 " Center the vim view horizontally
 Plug 'junegunn/goyo.vim'
@@ -692,30 +693,22 @@ set signcolumn=yes
 " https://stackoverflow.com/questions/40833296/how-to-disable-internal-key-bindings-in-vim
 " Disable built-in cc (delete and then insert)
 map cc <Nop>
-" Create default mappings
 
-let g:NERDCreateDefaultMappings = 1
+" numToStr/Comment.nvim
+lua << EOF
+require('Comment').setup()
+local ft = require('Comment.ft')
+ft.set('cpp', {'/* %s */'})
+ft.set('jsonc', {'/* %s */'})
+EOF
 
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-
-" Set a language to use its alternate delimiters by default
-let g:NERDAltDelims_java = 1
-
-" Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = { 'cpp': { 'left': '/*','right': '*/' } }
-
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-
-" Enable NERDCommenterToggle to check all selected lines is commented or not
-let g:NERDToggleCheckAllLines = 1
+lua << EOF
+require('distant').setup {
+    ['my.server.address'] = {
+        distant = {
+            bin = '/Users/harveymao/.cargo/bin/distant',
+        },
+    },
+   ['*'] = require('distant.settings').chip_default(),
+}
+EOF
