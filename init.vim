@@ -35,6 +35,9 @@ endif
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+" Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
+" Plug 'nvim-tree/nvim-tree.lua'
+
 Plug 'chipsenkbeil/distant.nvim'
 
 Plug 'azabiong/vim-highlighter'
@@ -119,8 +122,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " show a git diff
 Plug 'mhinz/vim-signify'
-
-Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " tell vim to load the theme/plugin
 Plug 'morhetz/gruvbox'
@@ -272,7 +273,8 @@ let g:coc_global_extensions = ['coc-json',
             \'coc-webview',
             \'coc-markdownlint',
             \'coc-markdown-preview-enhanced',
-            \'coc-clangd']
+            \'coc-clangd',
+            \'coc-lua']
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
 set encoding=UTF-8
@@ -471,10 +473,6 @@ xmap <silent> <C-d> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)
 " root pattern for python project, especially for coc-pright to work properly
 " https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders#resolve-workspace-folder
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.root']
-
-
-" " -- vim-cpp-modern for c/c++ syntax highlighting -- " " Disable function highlighting (affects both C and C++ files) let g:cpp_function_highlight = 1
-
 
 let g:coc_default_semantic_highlight_groups = 1
 
@@ -696,6 +694,14 @@ set signcolumn=yes
 " https://stackoverflow.com/questions/40833296/how-to-disable-internal-key-bindings-in-vim
 " Disable built-in cc (delete and then insert)
 map cc <Nop>
+" unmap :W for fzf-vim
+" https://github.com/junegunn/fzf.vim/issues/1084
+" https://vi.stackexchange.com/questions/27785/disable-command-but-allow-to-write-in-command-mode
+command! -nargs=* W w
+
+
+" Enable lua syntax highlighing
+let g:vimsyn_embed = 'l'
 
 " numToStr/Comment.nvim
 lua << EOF
