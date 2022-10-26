@@ -703,6 +703,7 @@ map cc <Nop>
 
 " unmap :W for fzf-vim
 " https://github.com/junegunn/fzf.vim/issues/1084
+" https://vi.stackexchange.com/questions/27785/disable-command-but-allow-to-write-in-command-mode
 command! -nargs=* W w
 set nospell
 
