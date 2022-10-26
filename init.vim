@@ -37,6 +37,7 @@ endif
 call plug#begin('~/.vim/plugged')
 " Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
 " Plug 'nvim-tree/nvim-tree.lua'
+Plug 'itchyny/lightline.vim'
 
 Plug 'chipsenkbeil/distant.nvim'
 
@@ -99,7 +100,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'APZelos/blamer.nvim'
 
 " new status bar
-Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline'
 
 " displaying thin vertical lines at each indentation level
 " Plug 'yggdroot/indentline'
@@ -751,3 +752,41 @@ let g:NERDTrimTrailingWhitespace = 1
 
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
+
+let g:lightline = {
+\ 'colorscheme': 'gruvbox',
+\ 'active': {
+\   'left': [ [ 'mode', 'paste' ],
+\             ['floaterm_info', 'readonly', 'filename', 'modified' ] ],
+\   'right': [['cocstatus']],
+\ },
+\ 'component_function': {
+\   'cocstatus': 'StatusDiagnostic',
+\   'floaterm_info': 'Lightline_FloatermInfo',
+\ },
+\ }
+
+" \   'cocstatus': 'coc#status'
+" " Use autocmd to force lightline update.
+function! StatusDiagnostic() abort
+let info = get(b:, 'coc_diagnostic_info', {})
+if empty(info) | return '' | endif
+let msgs = []
+if get(info, 'error', 0)
+  call add(msgs, 'E' . info['error'])
+endif
+if get(info, 'E', 0)
+  call add(msgs, 'W' . info['warning'])
+endif
+return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
+endfunction
+
+autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+
+function! Lightline_FloatermInfo() abort
+  let buffers = floaterm#buflist#gather()
+  let cnt = len(buffers)
+  let cur = floaterm#buflist#curr()
+  let idx = index(buffers, cur) + 1
+  return printf('floaterm %s/%s', idx, cnt)
+endfunction
