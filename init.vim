@@ -42,6 +42,10 @@ endif
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+" Plug 'edluffy/hologram.nvim'
+Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
+Plug 'nvim-tree/nvim-tree.lua'
+
 Plug 'chipsenkbeil/distant.nvim'
 Plug 'azabiong/vim-highlighter'
 
@@ -269,7 +273,9 @@ let g:coc_global_extensions = ['coc-json',
             \'coc-cmake',
             \'coc-sh',
             \'coc-markdownlint',
-            \'coc-lua']
+            \'coc-lua',
+            \'coc-webview']
+            " \'coc-markdown-preview-enhancedsa']
 " \'coc-dash-complete',
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
@@ -695,6 +701,9 @@ hi SpellCap cterm=none
 " Disable built-in cc (delete and then insert)
 map cc <Nop>
 
+" unmap :W for fzf-vim
+" https://github.com/junegunn/fzf.vim/issues/1084
+command! -nargs=* W w
 set nospell
 
 " Enable lua syntax highlighing
@@ -718,3 +727,55 @@ require('distant').setup {
    ['*'] = require('distant.settings').chip_default(),
 }
 EOF
+
+lua << EOF
+-- examples for your init.lua
+
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- empty setup using defaults
+require("nvim-tree").setup()
+
+-- OR setup with some options
+require("nvim-tree").setup({
+  sort_by = "case_sensitive",
+  view = {
+    adaptive_size = true,
+    mappings = {
+      list = {
+        { key = "u", action = "dir_up" },
+      },
+    },
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
+
+require'nvim-web-devicons'.setup {
+ -- your personnal icons can go here (to override)
+ -- you can specify color or cterm_color instead of specifying both of them
+ -- DevIcon will be appended to `name`
+ override = {
+  zsh = {
+    icon = "",
+    color = "#428850",
+    cterm_color = "65",
+    name = "Zsh"
+  }
+ };
+ -- globally enable different highlight colors per icon (default to true)
+ -- if set to false all icons will have the default icon's color
+ color_icons = true;
+ -- globally enable default icons (default to false)
+ -- will get overriden by `get_icons` option
+ default = true;
+}
+EOF
+
+

@@ -31,6 +31,10 @@
     "python.analysis.diagnosticSeverityOverrides": {"reportInvalidStringEscapeSequence": "none"},
     // https://github.com/fannheyward/coc-pyright/issues/163
     "python.analysis.useLibraryCodeForTypes": false,
+    "markdownlint.config":
+    {
+        "default": true
+    },
 
     "languageserver":
     {
@@ -40,5 +44,13 @@
             "filetypes": ["dockerfile"],
             "args": ["--stdio"]
         }
+        /* "efm": */
+        /* { */
+        /*     "command": "efm-langserver", */
+        /*     "args": ["-c", "/home/uisee/.config/efm-langserver/config.yaml"], */
+        /*     // custom config path */
+        /*     /* "args": ["-c", "/path/to/your/config.yaml"], */
+        /*     "filetypes": ["vim", "markdown"] */
+        /* } */
     }
 }
