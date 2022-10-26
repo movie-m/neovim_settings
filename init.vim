@@ -45,6 +45,8 @@ Plug 'azabiong/vim-highlighter'
 " nvim v0.5.0
 Plug 'kdheepak/lazygit.nvim'
 
+Plug 'preservim/nerdcommenter'
+
 Plug 'numToStr/Comment.nvim'
 
 " Center the vim view horizontally
@@ -234,7 +236,8 @@ let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
 set updatetime=100
 
 " Disable the diagnostics in SelectMode
-au ModeChanged *:s :let b:coc_diagnostic_disable = 1
+au ModeChanged *:s :let b:coc_diagnostic_disable = 1 | call CocActionAsync('diagnosticRefresh')
+au ModeChanged *:i :let b:coc_diagnostic_disable = 1 | call CocActionAsync('diagnosticRefresh')
 au ModeChanged *:n :let b:coc_diagnostic_disable = 0 | call CocActionAsync('diagnosticRefresh')
 " Make vim treat all json files as jsonc to allow comments
 " ref: https://www.codegrepper.com/code-examples/html/coc+allow+comments+in+json
@@ -721,3 +724,30 @@ require('distant').setup {
    ['*'] = require('distant.settings').chip_default(),
 }
 EOF
+
+" Create default mappings for NERDCommenter
+let g:NERDCreateDefaultMappings = 1
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'cpp': { 'left': '/*','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
