@@ -237,6 +237,10 @@ let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
 " -- vim-signify default updatetime 4000ms is not good for async update -- "
 set updatetime=100
 
+" Disable the diagnostics in SelectMode
+au ModeChanged *:s :let b:coc_diagnostic_disable = 1 | call CocActionAsync('diagnosticRefresh')
+au ModeChanged *:i :let b:coc_diagnostic_disable = 1 | call CocActionAsync('diagnosticRefresh')
+au ModeChanged *:n :let b:coc_diagnostic_disable = 0 | call CocActionAsync('diagnosticRefresh')
 " Make vim treat all json files as jsonc to allow comments
 " ref: https://www.codegrepper.com/code-examples/html/coc+allow+comments+in+json
 augroup JsonToJsonc
