@@ -155,10 +155,11 @@ export PATH="/usr/lib/ccache:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Feed the output of rg --files into fzf
+# rg --files Print the files that ripgrep would search and exclude symlinks, etc.
+export FZF_DEFAULT_COMMAND='rg --files'
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 export PATH="/usr/local/go/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
-
-export GO111MODULE=on
