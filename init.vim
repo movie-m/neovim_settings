@@ -1,3 +1,4 @@
+" Note: The installed plugins work well on NVIM v0.7.0!
 set cursorline
 
 " -- disable auto-comment in line continuation -- "
@@ -243,6 +244,7 @@ au ModeChanged s:s :let b:coc_diagnostic_disable = 1 | call CocActionAsync('diag
 au ModeChanged n:* :let b:coc_diagnostic_disable = 1 | call CocActionAsync('diagnosticRefresh')
 au ModeChanged *:i :let b:coc_diagnostic_disable = 1 | call CocActionAsync('diagnosticRefresh')
 au ModeChanged *:n :let b:coc_diagnostic_disable = 0 | call CocActionAsync('diagnosticRefresh')
+au ModeChanged n:n :let b:coc_diagnostic_disable = 0 | call CocActionAsync('diagnosticRefresh')
 
 " Make vim treat all json files as jsonc to allow comments
 " ref: https://www.codegrepper.com/code-examples/html/coc+allow+comments+in+json
@@ -705,8 +707,6 @@ hi SpellRare cterm=none
 " hi SpellBad cterm=none
 hi SpellCap cterm=none
 
-" Disable built-in cc (delete and then insert)
-map cc <Nop>
 
 " unmap :W for fzf-vim
 " https://github.com/junegunn/fzf.vim/issues/1084
@@ -787,3 +787,5 @@ require'nvim-web-devicons'.setup {
 EOF
 
 
+" Disable built-in cc (delete and then insert)
+map cc <Nop>
