@@ -140,7 +140,8 @@ call plug#end()
 
 
 " -- spell check -- "
-set spell spelllang=en_us
+" set spell spelllang=en_us
+set nospell
 
 " -- disable spell checking in terminal buffers -- "
 au TermOpen * setlocal nospell
@@ -240,6 +241,7 @@ set updatetime=100
 au ModeChanged *:s :let b:coc_diagnostic_disable = 1 | call CocActionAsync('diagnosticRefresh')
 au ModeChanged *:i :let b:coc_diagnostic_disable = 1 | call CocActionAsync('diagnosticRefresh')
 au ModeChanged *:n :let b:coc_diagnostic_disable = 0 | call CocActionAsync('diagnosticRefresh')
+au ModeChanged n:n :let b:coc_diagnostic_disable = 0 | call CocActionAsync('diagnosticRefresh')
 " Make vim treat all json files as jsonc to allow comments
 " ref: https://www.codegrepper.com/code-examples/html/coc+allow+comments+in+json
 augroup JsonToJsonc
@@ -754,15 +756,19 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
 let g:lightline = {
-\ 'colorscheme': 'gruvbox',
+\ 'colorscheme': 'darcula',
 \ 'active': {
-\   'left': [ [ 'mode', 'paste' ],
-\             ['floaterm_info', 'readonly', 'filename', 'modified' ] ],
-\   'right': [['cocstatus']],
+\   'left': [ ['mode', 'paste' ],
+\             ['gitbranch', 'floaterm_info', 'readonly', 'filename', 'modified' ] ],
+\   'right': [['lineinfo'],
+\             ['percent'],
+\             [ 'fileformat', 'fileencoding', 'filetype'],
+\             ['cocstatus']]
 \ },
 \ 'component_function': {
 \   'cocstatus': 'StatusDiagnostic',
 \   'floaterm_info': 'Lightline_FloatermInfo',
+\   'gitbranch': 'FugitiveHead'
 \ },
 \ }
 
@@ -790,3 +796,6 @@ function! Lightline_FloatermInfo() abort
   let idx = index(buffers, cur) + 1
   return printf('floaterm %s/%s', idx, cnt)
 endfunction
+
+
+set noshowmode
