@@ -43,6 +43,8 @@ endif
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+Plug 'kazhala/close-buffers.nvim'
+
 " Plug 'edluffy/hologram.nvim'
 Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
 Plug 'nvim-tree/nvim-tree.lua'
