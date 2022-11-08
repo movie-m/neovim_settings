@@ -791,3 +791,5 @@ EOF
 
 " Disable built-in cc (delete and then insert)
 map cc <Nop>
+
+let g:netrw_browser_viewer='open'
