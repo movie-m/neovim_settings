@@ -1,7 +1,7 @@
 {
     "diagnostic.showUnused": false,
     "diagnostic.level": "warning",
-    "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.3/clangd_15.0.3/bin/clangd",
+    "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.6/clangd_15.0.6/bin/clangd",
     "clangd.enabled": true,
     /*"clangd.disableDiagnostics": true, */
     "clangd.arguments": ["--background-index=true", "--header-insertion=never", "-clang-tidy=false",
@@ -52,5 +52,6 @@
         /*     /* "args": ["-c", "/path/to/your/config.yaml"], */
         /*     "filetypes": ["vim", "markdown"] */
         /* } */
-    }
+    },
+    "snippets.ultisnips.pythonPrompt": false
 }
