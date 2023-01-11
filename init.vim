@@ -9,7 +9,7 @@ autocmd VimEnter * set textwidth=100 formatoptions+=t
 set cinkeys-=:
 
 " -- set a line width marker -- "
-set colorcolumn=100
+set colorcolumn=80
 
 " -- remove color column in quickfix window --"
 au FileType qf setlocal colorcolumn=
@@ -23,14 +23,15 @@ let g:gruvbox_italic=1
 
 " " -- highlight trailing white-space -- "
 " " ref: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
-if (&ft!='qf')
-    autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-    match ExtraWhitespace /\s\+$/
-    autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-    autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-    autocmd BufWinLeave * call clearmatches()
-endif
+" weird red in floaterm
+" if (&ft!='qf')
+"     autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+"     match ExtraWhitespace /\s\+$/
+"     autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+"     autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+"     autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+"     autocmd BufWinLeave * call clearmatches()
+" endif
 
 " https://unix.stackexchange.com/questions/574764/vim-automatically-clear-the-command-line
 " autocmd CursorHold * echo ''
@@ -48,6 +49,8 @@ Plug 'kazhala/close-buffers.nvim'
 " Plug 'edluffy/hologram.nvim'
 Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
 Plug 'nvim-tree/nvim-tree.lua'
+
+Plug 'ntpeters/vim-better-whitespace'
 
 Plug 'chipsenkbeil/distant.nvim'
 Plug 'azabiong/vim-highlighter'
@@ -112,7 +115,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 " file system explorer and search
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
 " Plug 'ryanoasis/vim-devicons'
 " Plug 'ctrlpvim/ctrlp.vim'
 
@@ -284,7 +287,8 @@ let g:coc_global_extensions = ['coc-json',
             \'coc-cmake',
             \'coc-sh',
             \'coc-markdownlint',
-            \'coc-lua',
+            \'coc-sumneko-lua',
+            \'coc-yaml',
             \'coc-webview']
             " \'coc-markdown-preview-enhancedsa']
 " \'coc-dash-complete',
@@ -353,7 +357,8 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " shortcut to switch between header and source using clangd
-nmap <silent> <C-h> :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
+" nmap <silent> <C-h> :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
+nmap <silent> gh :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -716,6 +721,9 @@ hi SpellCap cterm=none
 command! -nargs=* W w
 set nospell
 
+" Disable built-in cc (delete and then insert)
+map cc <Nop>
+
 " Enable lua syntax highlighing
 let g:vimsyn_embed = 'l'
 
@@ -788,8 +796,6 @@ require'nvim-web-devicons'.setup {
 }
 EOF
 
-
-" Disable built-in cc (delete and then insert)
-map cc <Nop>
-
 let g:netrw_browser_viewer='open'
+
+" nmap <C-t> :NvimTreeToggle<CR>

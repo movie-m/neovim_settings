@@ -133,3 +133,16 @@ export FZF_DEFAULT_COMMAND='rg --files'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# ref: http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment#Managing_Your_Environment
+source /opt/ros/noetic/setup.zsh
+export ROS_HOSTNAME=localhost
+
+# Allow ros to know where your catkin_ws is
+source ~/catkin_ws/devel/setup.zsh
+
+# ref: https://phoenixnap.com/kb/ubuntu-proxy-settings
+# export HTTP_PROXY="127.0.0.1:7890"
+# export HTTPS_PROXY="127.0.0.1:7890"
+# export FTP_PROXY="127.0.0.01:7890"
+# export NO_PROXY="localhost,127.0.0.1,::1"
