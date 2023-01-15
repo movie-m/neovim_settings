@@ -278,7 +278,8 @@ set hidden
 " -- setting from coc.vim github  --"
 " Note you can add extension names to the g:coc_global_extensions variable,
 " and coc will install the missing extensions after coc.nvim service started.
-let g:coc_global_extensions = ['coc-json', "Only :CocInstall coc-json@1.5.0 works !
+"Only :CocInstall coc-json@1.5.0 works !
+let g:coc_global_extensions = ['coc-json',
             \'coc-snippets',
             \'coc-git',
             \'coc-clangd',
