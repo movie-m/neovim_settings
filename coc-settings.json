@@ -1,15 +1,15 @@
 {
-    "diagnostic.showUnused": false,
-    "diagnostic.level": "warning",
     "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.6/clangd_15.0.6/bin/clangd",
     "clangd.enabled": true,
     /*"clangd.disableDiagnostics": true, */
     "clangd.arguments": ["--background-index=true", "--header-insertion=never", "-clang-tidy=false",
         "-clang-tidy-checks=*"],
     /*"clangd.disableSnippetCompletion": true,*/
+
+    "diagnostic.showUnused": false,
     "diagnostic.refreshOnInsertMode": false,
     "diagnostic.enableSign": false,
-    "diagnostic.signLevel": "error",
+    "diagnostic.signLevel":"warning",
 
     /*
     "diagnostic.checkCurrentLine": false,
@@ -36,8 +36,17 @@
         "default": true
     },
 
+    "json.enable": true,
+    "json.validate.enable": true,
+    "json.trace.server": "messages",
+
     "languageserver":
     {
+        "jsonfile":
+        {
+            "command": "vscode-json-languageserver",
+            "filetypes": ["jsonfile"]
+        },
         "dockerfile":
         {
             "command": "docker-langserver",

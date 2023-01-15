@@ -9,7 +9,7 @@ autocmd VimEnter * set textwidth=100 formatoptions+=t
 set cinkeys-=:
 
 " -- set a line width marker -- "
-set colorcolumn=80
+set colorcolumn=100
 
 " -- remove color column in quickfix window --"
 au FileType qf setlocal colorcolumn=
@@ -46,9 +46,10 @@ let g:gruvbox_italic=1
 call plug#begin('~/.vim/plugged')
 Plug 'kazhala/close-buffers.nvim'
 
+Plug 'preservim/nerdtree'
 " Plug 'edluffy/hologram.nvim'
-Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
-Plug 'nvim-tree/nvim-tree.lua'
+" Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
+" Plug 'nvim-tree/nvim-tree.lua'
 
 Plug 'ntpeters/vim-better-whitespace'
 
@@ -85,8 +86,8 @@ Plug 'jesseleite/vim-agriculture'
 Plug 'junegunn/vim-easy-align'
 
 " syntax highlighting for json with c-style comments
-" Plug 'neoclide/jsonc.vim'
-Plug 'kevinoid/vim-jsonc'
+Plug 'neoclide/jsonc.vim'
+" Plug 'kevinoid/vim-jsonc'
 
 " URL highlighting tool
 Plug 'itchyny/vim-highlighturl'
@@ -277,7 +278,7 @@ set hidden
 " -- setting from coc.vim github  --"
 " Note you can add extension names to the g:coc_global_extensions variable,
 " and coc will install the missing extensions after coc.nvim service started.
-let g:coc_global_extensions = ['coc-json',
+let g:coc_global_extensions = ['coc-json', "Only :CocInstall coc-json@1.5.0 works !
             \'coc-snippets',
             \'coc-git',
             \'coc-clangd',
@@ -357,8 +358,10 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " shortcut to switch between header and source using clangd
-" nmap <silent> <C-h> :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
-nmap <silent> gh :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
+nmap <silent> <C-h> :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
+" nmap <silent> <ALT-h> :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
+" nmap <silent> <Esc-h> :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
+" nmap <silent> gh :call CocActionAsync('runCommand', 'clangd.switchSourceHeader')<CR>
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -543,6 +546,7 @@ nmap <Leader>w <Plug>RgRawWordUnderCursor <cr>
 let g:agriculture#disable_smart_quoting = 0
 
 " -- asynctasks -- "
+" be sure to creat file .root in where the make.sh resides.
 let g:asyncrun_rootmarks = ['.root']
 let g:asyncrun_open = 6
 " bind the F7 to the uos-build in ~/.config/nvim/tasks.ini
@@ -743,56 +747,6 @@ require('distant').setup {
         },
     },
    ['*'] = require('distant.settings').chip_default(),
-}
-EOF
-
-lua << EOF
--- examples for your init.lua
-
--- disable netrw at the very start of your init.lua (strongly advised)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- empty setup using defaults
-require("nvim-tree").setup()
-
--- OR setup with some options
-require("nvim-tree").setup({
-  sort_by = "case_sensitive",
-  view = {
-    adaptive_size = true,
-    mappings = {
-      list = {
-        { key = "u", action = "dir_up" },
-      },
-    },
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
-})
-
-require'nvim-web-devicons'.setup {
- -- your personnal icons can go here (to override)
- -- you can specify color or cterm_color instead of specifying both of them
- -- DevIcon will be appended to `name`
- override = {
-  zsh = {
-    icon = "",
-    color = "#428850",
-    cterm_color = "65",
-    name = "Zsh"
-  }
- };
- -- globally enable different highlight colors per icon (default to true)
- -- if set to false all icons will have the default icon's color
- color_icons = true;
- -- globally enable default icons (default to false)
- -- will get overriden by `get_icons` option
- default = true;
 }
 EOF
 
