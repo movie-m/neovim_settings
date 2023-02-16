@@ -37,8 +37,11 @@
     },
 
     "json.enable": true,
-    "json.validate.enable": true,
+    /* "json.validate.enable": true, */
     "json.trace.server": "messages",
+
+    "xml.java.home": "/usr",
+    "xml.validation.noGrammar":"ignore",
 
     "languageserver":
     {
