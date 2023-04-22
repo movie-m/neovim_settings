@@ -16,16 +16,23 @@ set shell=zsh
 " -- display row and column number on the status bar -- "
 set ruler
 
+" ref: https://superuser.com/questions/238362/enable-mouse-for-scrolling-only-in-vim-in-iterm-macosx
+set mouse=nicr
 " -- highlight trailing white-space -- "
 " ref: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
-if (&ft!='qf')
-    autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-    match ExtraWhitespace /\s\+$/
-    autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-    autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-    autocmd BufWinLeave * call clearmatches()
-endif
+" if (&ft!='qf')
+"     autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+"     match ExtraWhitespace /\s\+$/
+"     autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+"     autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+"     autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+"     autocmd BufWinLeave * call clearmatches()
+" endif
+
+function! Cond(Cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:Cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
 
 " -- fix the delete key behavior on mac os -- "
 " set backspace=eol,start,indent
@@ -37,7 +44,10 @@ endif
 call plug#begin('~/.vim/plugged')
 " Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
 " Plug 'nvim-tree/nvim-tree.lua'
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
+Plug 'mfussenegger/nvim-dap'
+
+Plug 'ntpeters/vim-better-whitespace'
 
 Plug 'chipsenkbeil/distant.nvim'
 
@@ -46,7 +56,7 @@ Plug 'azabiong/vim-highlighter'
 " nvim v0.5.0
 Plug 'kdheepak/lazygit.nvim'
 
-Plug 'preservim/nerdcommenter'
+" Plug 'preservim/nerdcommenter'
 
 Plug 'numToStr/Comment.nvim'
 
@@ -74,7 +84,11 @@ Plug 'junegunn/fzf.vim'
 Plug 'jesseleite/vim-agriculture'
 
 " make sure you use single quotes
-Plug 'junegunn/vim-easy-align'
+" Plug 'junegunn/vim-easy-align'
+" use normal easymotion when in VIM mode
+Plug 'easymotion/vim-easymotion', Cond(!exists('g:vscode'))
+" use VSCode easymotion when in VSCode mode
+Plug 'asvetliakov/vim-easymotion', Cond(exists('g:vscode'), { 'as': 'vsc-easymotion' })
 
 " syntax highlighting for json with c-style comments
 " Plug 'neoclide/jsonc.vim'
@@ -100,7 +114,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'APZelos/blamer.nvim'
 
 " new status bar
-" Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " displaying thin vertical lines at each indentation level
 " Plug 'yggdroot/indentline'
@@ -121,7 +136,7 @@ Plug 'skywind3000/vim-terminal-help'
 Plug 'skywind3000/asynctasks.vim'
 
 " Use release branch (recommend)
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', Cond(!exists('g:vscode'))
 
 " show a git diff
 Plug 'mhinz/vim-signify'
@@ -131,9 +146,6 @@ Plug 'morhetz/gruvbox'
 
 " search and replace
 " Plug 'brooth/far.vim'
-
-" Easy Motion
-Plug 'easymotion/vim-easymotion'
 
 " initialize plugin system
 call plug#end()
@@ -238,10 +250,11 @@ let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
 set updatetime=100
 
 " Disable the diagnostics in SelectMode
-au ModeChanged *:s :let b:coc_diagnostic_disable = 1 | call CocActionAsync('diagnosticRefresh')
-au ModeChanged *:i :let b:coc_diagnostic_disable = 1 | call CocActionAsync('diagnosticRefresh')
-au ModeChanged *:n :let b:coc_diagnostic_disable = 0 | call CocActionAsync('diagnosticRefresh')
-au ModeChanged n:n :let b:coc_diagnostic_disable = 0 | call CocActionAsync('diagnosticRefresh')
+" au ModeChanged *:s :let b:coc_diagnostic_disable = 1 | call CocActionAsync('diagnosticRefresh')
+" au ModeChanged *:i :let b:coc_diagnostic_disable = 1 | call CocActionAsync('diagnosticRefresh')
+" au ModeChanged *:n :let b:coc_diagnostic_disable = 0 | call CocActionAsync('diagnosticRefresh')
+" au ModeChanged n:n :let b:coc_diagnostic_disable = 0 | call CocActionAsync('diagnosticRefresh')
+
 " Make vim treat all json files as jsonc to allow comments
 " ref: https://www.codegrepper.com/code-examples/html/coc+allow+comments+in+json
 augroup JsonToJsonc
@@ -264,7 +277,7 @@ set expandtab
 " -- required for operations modifying multiple buffers like rename -- "
 set hidden
 
-
+if !exists('g:vscode')
 " -- setting from coc.vim github  --"
 " Note you can add extension names to the g:coc_global_extensions variable,
 " and coc will install the missing extensions after coc.nvim service started.
@@ -276,11 +289,12 @@ let g:coc_global_extensions = ['coc-json',
             \'coc-sh',
             \'coc-pyright',
             \'coc-cmake',
-            \'coc-webview',
-            \'coc-markdownlint',
-            \'coc-markdown-preview-enhanced',
             \'coc-clangd',
             \'coc-lua']
+
+" \'coc-webview',
+" \'coc-markdownlint',
+" \'coc-markdown-preview-enhanced',
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
 set encoding=UTF-8
@@ -481,6 +495,7 @@ xmap <silent> <C-d> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.root']
 
 let g:coc_default_semantic_highlight_groups = 1
+endif
 
 " -- Easy Motion -- "
 " <Leader>f{char} to move to {char}
@@ -727,75 +742,3 @@ require('distant').setup {
    ['*'] = require('distant.settings').chip_default(),
 }
 EOF
-
-" Create default mappings for NERDCommenter
-let g:NERDCreateDefaultMappings = 1
-
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-
-" Set a language to use its alternate delimiters by default
-let g:NERDAltDelims_java = 1
-
-" Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = { 'cpp': { 'left': '/*','right': '*/' } }
-
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-
-" Enable NERDCommenterToggle to check all selected lines is commented or not
-let g:NERDToggleCheckAllLines = 1
-
-let g:lightline = {
-\ 'colorscheme': 'darcula',
-\ 'active': {
-\   'left': [ ['mode', 'paste' ],
-\             ['gitbranch', 'floaterm_info', 'readonly', 'filename', 'modified' ] ],
-\   'right': [['lineinfo'],
-\             ['percent'],
-\             [ 'fileformat', 'fileencoding', 'filetype'],
-\             ['cocstatus']]
-\ },
-\ 'component_function': {
-\   'cocstatus': 'StatusDiagnostic',
-\   'floaterm_info': 'Lightline_FloatermInfo',
-\   'gitbranch': 'FugitiveHead'
-\ },
-\ }
-
-" \   'cocstatus': 'coc#status'
-" " Use autocmd to force lightline update.
-function! StatusDiagnostic() abort
-let info = get(b:, 'coc_diagnostic_info', {})
-if empty(info) | return '' | endif
-let msgs = []
-if get(info, 'error', 0)
-  call add(msgs, 'E' . info['error'])
-endif
-if get(info, 'E', 0)
-  call add(msgs, 'W' . info['warning'])
-endif
-return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
-endfunction
-
-autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
-
-function! Lightline_FloatermInfo() abort
-  let buffers = floaterm#buflist#gather()
-  let cnt = len(buffers)
-  let cur = floaterm#buflist#curr()
-  let idx = index(buffers, cur) + 1
-  return printf('floaterm %s/%s', idx, cnt)
-endfunction
-
-
-set noshowmode

@@ -6,9 +6,9 @@
     "clangd.arguments": ["--background-index=true", "--header-insertion=never", "-clang-tidy=false",
             "-clang-tidy-checks=*"],
     "semanticTokens.enable": true,
+    "inlayHint.enable": true,
     "diagnostic.refreshOnInsertMode": false,
     "diagnostic.enableSign": false,
-    "inlayHint.enable": true,
 
     /* hide the function docstring or signature
     "signature.hideOnTextChange": true,
@@ -19,8 +19,8 @@
     "python.analysis.diagnosticSeverityOverrides": {"reportOptionalMemberAccess":"none",
         "reportInvalidStringEscapeSequence":"none", "reportGeneralTypeIssues": "none"},
     */
-
-    "python.analysis.diagnosticSeverityOverrides": {"reportInvalidStringEscapeSequence": "none"},
+    "python.analysis.diagnosticSeverityOverrides": {"reportInvalidStringEscapeSequence": "none",
+    "reportGeneralTypeIssues": "none"},
 
     // https://github.com/fannheyward/coc-pyright/issues/163
     "python.analysis.useLibraryCodeForTypes": false
