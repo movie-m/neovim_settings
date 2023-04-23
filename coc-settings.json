@@ -20,14 +20,13 @@
     // "semanticTokens.filetypes":["*"],
     "semanticTokens.enable": true,
     /*"semanticTokens.filetypes":["cpp", "c"], */
-    "colors.filetypes": ["*"],
+    /* "colors.filetypes": ["*"], */
+    "colors.enable": true,
     "list.previewSplitRight": true,
     /*"coc.preferences.jumpCommand": "vsplit", */
 
-    /*
-    "python.analysis.diagnosticSeverityOverrides": {"reportGeneralTypeIssues": "none",
-            "reportOptionalMemberAccess": "none", "reportInvalidStringEscapeSequence": "none"}
-    */
+    /* "python.analysis.diagnosticSeverityOverrides": {"reportGeneralTypeIssues": "none", */
+    /*         "reportOptionalMemberAccess": "none", "reportInvalidStringEscapeSequence": "none"}, */
     "python.analysis.diagnosticSeverityOverrides": {"reportInvalidStringEscapeSequence": "none"},
     // https://github.com/fannheyward/coc-pyright/issues/163
     "python.analysis.useLibraryCodeForTypes": false,
@@ -42,6 +41,14 @@
 
     "xml.java.home": "/usr",
     "xml.validation.noGrammar":"ignore",
+
+    "yaml.enable": true,
+    "yaml.schemaStore.enable": true,
+    "yaml.schemaStore.url": "https://www.schemastore.org/api/json/catalog.json",
+    /* "yaml.schemas": { */
+    /*       "https://gist.githubusercontent.com/simnalamburt/2c3263b783ed3f4471bda9ca901bb69f/raw/9c2cd17d6f4683cf80b6360a2d53b33fd49556d7/allow-all-json-schema.json": "/*" */
+    /**/
+    /* }, */
 
     "languageserver":
     {

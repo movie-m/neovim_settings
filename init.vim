@@ -1,5 +1,5 @@
-" Note: The installed plugins work well on NVIM v0.7.0!
 set cursorline
+set mouse=
 
 " -- disable auto-comment in line continuation -- "
 au bufenter * set fo-=c fo-=r fo-=o
@@ -24,7 +24,7 @@ let g:gruvbox_italic=1
 " " -- highlight trailing white-space -- "
 " " ref: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
 " weird red in floaterm
-if !exists('g:vscode')
+if !exists('g:vscode') && !&buftype ==# "terminal"
     if (&ft!='qf')
         autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
         match ExtraWhitespace /\s\+$/
@@ -51,6 +51,9 @@ endfunction
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+
+Plug 'akinsho/toggleterm.nvim'
+
 Plug 'kazhala/close-buffers.nvim'
 
 Plug 'preservim/nerdtree'
@@ -67,7 +70,7 @@ Plug 'kdheepak/lazygit.nvim'
 
 Plug 'numToStr/Comment.nvim'
 
-Plug 'Pocco81/auto-save.nvim'
+" Plug 'Pocco81/auto-save.nvim'
 
 " Center the vim view horizontally
 Plug 'junegunn/goyo.vim'
@@ -300,7 +303,6 @@ let g:coc_global_extensions = ['coc-json',
             \'coc-sh',
             \'coc-markdownlint',
             \'coc-sumneko-lua',
-            \'coc-yaml',
             \'coc-webview',
             \'coc-xml']
             " \'coc-markdown-preview-enhancedsa']
@@ -408,7 +410,7 @@ nmap <leader>rn <Plug>(coc-rename)
 nnoremap <leader>crn :CocCommand workspace.inspectEdit<CR>
 nnoremap <A-f> :CocSearch
 nnoremap <silent> <Leader>cf :exe 'CocSearch '.expand('<cword>')<CR>
-nmap <silent> <C-a> :call CocActionAsync('runCommand', 'document.searchCurrentWord')<CR>
+" nmap <silent> <C-a> :call CocActionAsync('runCommand', 'document.searchCurrentWord')<CR>
 
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
@@ -743,6 +745,10 @@ map cc <Nop>
 " Enable lua syntax highlighing
 let g:vimsyn_embed = 'l'
 
+lua << EOF
+require("toggleterm").setup()
+EOF
+
 " Plug 'numToStr/Comment.nvim'
 lua << EOF
 require('Comment').setup()
@@ -768,3 +774,11 @@ let g:netrw_browser_viewer='open'
 
 " autocmd BufRead, BufNewFile *.launch setfiletype roslaunch
 autocmd BufRead, BufNewFile *.launch setfiletype xml
+
+" Fix auto-indentation for YAML files
+augroup yaml_fix
+    autocmd!
+    autocmd FileType yaml setlocal indentexpr=
+augroup END
+
+
