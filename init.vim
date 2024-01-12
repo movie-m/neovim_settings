@@ -24,16 +24,16 @@ let g:gruvbox_italic=1
 " " -- highlight trailing white-space -- "
 " " ref: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
 " weird red in floaterm
-if !exists('g:vscode') && !&buftype ==# "terminal"
-    if (&ft!='qf')
-        autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-        match ExtraWhitespace /\s\+$/
-        autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-        autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-        autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-        autocmd BufWinLeave * call clearmatches()
-    endif
-endif
+" if !exists('g:vscode') && !&buftype ==# "terminal"
+" if (&ft!='qf'
+"     autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+"     match ExtraWhitespace /\s\+$/
+"     autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+"     autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+"     autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+"     autocmd BufWinLeave * call clearmatches()
+" endif
+" endif
 
 " https://unix.stackexchange.com/questions/574764/vim-automatically-clear-the-command-line
 " autocmd CursorHold * echo ''
@@ -50,7 +50,11 @@ endfunction
 " specify a directory for plugins
 " - for neovim: stdpath('data') . '/plugged'
 " - avoid using standard vim directory names like 'plugin'
+
+
 call plug#begin('~/.vim/plugged')
+if !exists('g:vscode')
+Plug 'github/copilot.vim'
 
 Plug 'akinsho/toggleterm.nvim'
 
@@ -61,14 +65,13 @@ Plug 'preservim/nerdtree'
 " Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
 " Plug 'nvim-tree/nvim-tree.lua'
 
-" Plug 'ntpeters/vim-better-whitespace'
+Plug 'ntpeters/vim-better-whitespace', Cond(!exists('g:vscode'))
 
 Plug 'chipsenkbeil/distant.nvim'
 Plug 'azabiong/vim-highlighter'
 
 Plug 'kdheepak/lazygit.nvim'
 
-Plug 'numToStr/Comment.nvim'
 
 " Plug 'Pocco81/auto-save.nvim'
 
@@ -94,8 +97,6 @@ Plug 'junegunn/fzf.vim'
 " Allow raw rg commands
 Plug 'jesseleite/vim-agriculture'
 
-" make sure you use single quotes
-Plug 'junegunn/vim-easy-align'
 
 " syntax highlighting for json with c-style comments
 Plug 'neoclide/jsonc.vim'
@@ -154,11 +155,20 @@ Plug 'morhetz/gruvbox'
 " search and replace
 " Plug 'brooth/far.vim'
 
-" Easy Motion
-Plug 'easymotion/vim-easymotion'
+Plug 'numToStr/Comment.nvim'
+endif
+
+" make sure you use single quotes
+" use normal easymotion when in VIM mode
+Plug 'easymotion/vim-easymotion', Cond(!exists('g:vscode'))
+" use VSCode easymotion when in VSCode mode
+Plug 'asvetliakov/vim-easymotion', Cond(exists('g:vscode'), { 'as': 'vsc-easymotion' })
+" Plug 'asvetliakov/vim-easymotion'
 
 " initialize plugin system
 call plug#end()
+
+if !exists('g:vscode')
 
 " -- spell check -- "
 set spell spelllang=en_us
@@ -513,21 +523,6 @@ autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.root']
 
 let g:coc_default_semantic_highlight_groups = 1
 
-" -- Easy Motion -- "
-" <Leader>f{char} to move to {char}
-map  f <Plug>(easymotion-bd-f)
-nmap f <Plug>(easymotion-overwin-f)
-
-" f{char}{char} to move to {char}{char}
-nmap <Leader>f <Plug>(easymotion-overwin-f2)
-
-" Move to line
-map <Leader>l <Plug>(easymotion-bd-jk)
-nmap <Leader>l <Plug>(easymotion-overwin-line)
-
-" Move to word
-" map  <Leader>w <Plug>(easymotion-bd-w)
-" nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 " -- rainbow for highlighting matching brackets -- "
 " https://vi.stackexchange.com/questions/14803/cmake-syntax-highlighting-not-working-as-expected
@@ -781,4 +776,31 @@ augroup yaml_fix
     autocmd FileType yaml setlocal indentexpr=
 augroup END
 
+endif
+
+
+
+" -- Easy Motion -- "
+" <Leader>f{char} to move to {char}
+map  f <Plug>(easymotion-bd-f)
+nmap f <Plug>(easymotion-overwin-f)
+
+" f{char}{char} to move to {char}{char}
+nmap <Leader>f <Plug>(easymotion-overwin-f2)
+
+" Move to line
+map <Leader>l <Plug>(easymotion-bd-jk)
+nmap <Leader>l <Plug>(easymotion-overwin-line)
+
+" Move to word
+" map  <Leader>w <Plug>(easymotion-bd-w)
+" nmap <Leader>w <Plug>(easymotion-overwin-w)
+
+
+if exists('g:vscode')
+    xmap gc  <Plug>VSCodeCommentary
+    nmap gc  <Plug>VSCodeCommentary
+    omap gc  <Plug>VSCodeCommentary
+    nmap gcc <Plug>VSCodeCommentaryLine
+endif
 
